@@ -7,15 +7,9 @@ namespace Petshop.infraStructure.Data
 {
     public class PetRepository : IPetRepository
     {
-        public int Id;
-        public List<Pet> Pets;
-
-
+        
         public PetRepository()
         {
-            Id = 0;
-            Pets = new List<Pet>();
-
 
         }
 
@@ -24,10 +18,7 @@ namespace Petshop.infraStructure.Data
         public Pet AddPet(Pet pet)
         {
 
-            Id++;
-            pet.Id = Id;
-            Pets.Add(pet);
-            return pet;
+            return FakeDB.AddPet(pet);
 
 
 
@@ -37,14 +28,14 @@ namespace Petshop.infraStructure.Data
         public Pet EditPet(Pet pet, int index)
         {
 
-            Pets[index] = pet;
-            return Pets[index];
+            FakeDB._pets[index] = pet;
+            return FakeDB._pets[index];
 
         }
 
         public List<Pet> GetPets()
         {
-            return Pets;
+            return FakeDB._pets;
         }
     }
 }

@@ -24,6 +24,10 @@ namespace Petshop.Core.Entity
             Email = email;
         }
 
+        public Owner()
+        {
+        }
+
         public override string ToString()
         {
             return $"{nameof(Id)}: {Id}, {nameof(FirstName)}: {FirstName}, {nameof(LastName)}: {LastName}, {nameof(Address)}: {Address}, {nameof(PhoneNumber)}: {PhoneNumber}, {nameof(Email)}: {Email}";

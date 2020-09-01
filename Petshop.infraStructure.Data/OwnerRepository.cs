@@ -7,35 +7,27 @@ using Petshop.Core.Entity;
 namespace Petshop.infraStructure.Data 
 {
    public class OwnerRepository : IOwnerRepository
-    {
-        public int Id;
-        public List<Owner> Owners;
-
+   {
+         
 
         public OwnerRepository()
         {
-            Id = 0;
-            Owners = new List<Owner>();
-
-
+            
         }
         public Owner AddOwner(Owner owner)
         {
-            Id++;
-            owner.Id = Id;
-            Owners.Add(owner);
-            return owner;
+            return FakeDB.AddOwner(owner);
         }
 
         public Owner EditOwner(Owner owner, int index)
         {
-            Owners[index] = owner;
-            return Owners[index];
+            FakeDB._owners[index] = owner;
+            return FakeDB._owners[index];
         }
 
         public List<Owner> GetOwners()
         {
-            return Owners;
+            return FakeDB._owners;
         }
 
        

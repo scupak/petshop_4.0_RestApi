@@ -24,6 +24,20 @@ namespace Petshop.Core.Entity
             SoldDate = soldDate;
 
         }
+        public Pet(string name, DateTime birthdate,string color, double price, PetType petType, DateTime soldDate)
+        {
+            Name = name;
+            Birthdate = birthdate;
+            Color = color;
+            Price = price;
+            PetType = petType;
+            SoldDate = soldDate;
+
+        }
+
+        public Pet()
+        {
+        }
 
         public override string ToString()
         {
