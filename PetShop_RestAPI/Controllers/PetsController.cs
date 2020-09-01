@@ -29,28 +29,35 @@ namespace PetShop_RestAPI.Controllers
 
         // GET api/<PetsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Pet Get(int id)
         {
-            return "value";
+            return _petService.GetPetById(id);
         }
 
         // POST api/<PetsController>
         [HttpPost]
-        public void Post([FromBody] Pet value)
+        public ActionResult<Pet> Post([FromBody] Pet value)
         {
-            _petService.CreatePet(value);
+            if (string.IsNullOrEmpty(value.Name))
+            {
+                return BadRequest("Name is required to create a pet");
+            }
+            return _petService.CreatePet(value);
         }
 
         // PUT api/<PetsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Pet value)
         {
+            value.Id = id;
+            _petService.EditPet(value);
         }
 
         // DELETE api/<PetsController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _petService.DeletePet(id);
         }
     }
 }

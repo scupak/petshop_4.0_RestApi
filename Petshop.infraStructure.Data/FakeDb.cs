@@ -7,28 +7,13 @@ namespace Petshop.infraStructure.Data
 {
     public static class FakeDB
     {
-        private static int _PetId = 0;
+        private static int _PetId = 1;
         public static List<Pet> _pets;
-        private static int _OwnerId = 0;
+        private static int _OwnerId = 1;
         public static List<Owner> _owners;
         public static void InitData()
         {
-            _pets = new List<Pet>
-            {
-                new Pet
-                {
-                    
-                    Id = _PetId++,
-                    Name = "Jerry",
-                    PetType = PetType.Cat,
-                    Birthdate = DateTime.Now.AddYears(-12),
-                    Color = "Blue",
-                    Price = 50,
-                    SoldDate = DateTime.Now.AddYears(-2),
-
-                }
-
-            };
+           
 
             
             _owners = new List<Owner>
@@ -46,6 +31,24 @@ namespace Petshop.infraStructure.Data
                 }
 
 
+
+            };
+
+            _pets = new List<Pet>
+            {
+                new Pet
+                {
+
+                    Id = _PetId++,
+                    Name = "Jerry",
+                    PetType = PetType.Cat,
+                    Birthdate = DateTime.Now.AddYears(-12),
+                    Color = "Blue",
+                    //Owner = _owners[0],
+                    Price = 50,
+                    SoldDate = DateTime.Now.AddYears(-2),
+
+                }
 
             };
         }
