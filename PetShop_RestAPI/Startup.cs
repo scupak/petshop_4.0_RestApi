@@ -39,6 +39,15 @@ namespace PetShop_RestAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                FakeDB.InitData();
+                /**
+                 *
+                 
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    var repo = scope.ServiceProvider.ge
+                }
+                */
             }
 
             app.UseHttpsRedirection();

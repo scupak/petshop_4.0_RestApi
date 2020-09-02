@@ -42,15 +42,24 @@ namespace PetShop_RestAPI.Controllers
             {
                 return BadRequest("Name is required to create a pet");
             }
-            return _petService.CreatePet(value);
+            return Ok( _petService.CreatePet(value));
         }
-
+        //aka update
         // PUT api/<PetsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Pet value)
+        public ActionResult<Pet> Put(int id, [FromBody] Pet value)
         {
             value.Id = id;
-            _petService.EditPet(value);
+
+           if( _petService.EditPet(value) == null)
+           {
+               return BadRequest("Could not find pet with the specified id");
+
+           }
+           else
+           {
+               return Ok();
+           }
         }
 
         // DELETE api/<PetsController>/5
