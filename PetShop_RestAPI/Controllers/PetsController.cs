@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Petshop.core.ApplicationServices;
@@ -29,7 +30,7 @@ namespace PetShop_RestAPI.Controllers
 
         // GET api/<PetsController>/5
         [HttpGet("{id}")]
-        public Pet Get(int id)
+        public ActionResult<Pet> Get(int id)
         {
             return _petService.GetPetById(id);
         }
@@ -64,9 +65,15 @@ namespace PetShop_RestAPI.Controllers
 
         // DELETE api/<PetsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult<Pet> Delete(int id)
         {
-            _petService.DeletePet(id);
+            if (_petService.DeletePet(id) == false)
+            {
+                return BadRequest("Could not delete pet");
+
+            }
+
+            return Ok();
         }
     }
 }
