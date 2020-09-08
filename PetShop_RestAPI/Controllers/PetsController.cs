@@ -23,27 +23,59 @@ namespace PetShop_RestAPI.Controllers
 
         // GET: api/<PetsController>
         [HttpGet]
-        public IEnumerable<Pet> Get()
+        public ActionResult<IEnumerable<Pet>> Get()
         {
-            return _petService.GetPets();
+            try
+            {
+                   return Ok(_petService.GetPets());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e);
+            }
+           
         }
 
         // GET api/<PetsController>/5
         [HttpGet("{id}")]
         public ActionResult<Pet> Get(int id)
         {
-            return _petService.GetPetById(id);
+            try
+            {
+
+                Pet pet = _petService.GetPetById(id);
+                if (pet == null)
+                {
+                    return StatusCode(404, "did not find pet");
+
+                }
+                return Ok(pet);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e);
+            }
+
+            
         }
 
         // POST api/<PetsController>
         [HttpPost]
         public ActionResult<Pet> Post([FromBody] Pet value)
         {
-            if (string.IsNullOrEmpty(value.Name))
+            try
             {
-                return BadRequest("Name is required to create a pet");
+                return string.IsNullOrEmpty(value.Name) ? BadRequest("Name is required to create a pet") : StatusCode(201, _petService.CreatePet(value));
             }
-            return Ok( _petService.CreatePet(value));
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e);
+            }
+            
+
         }
         //aka update
         // PUT api/<PetsController>/5
@@ -54,12 +86,12 @@ namespace PetShop_RestAPI.Controllers
 
            if( _petService.EditPet(value) == null)
            {
-               return BadRequest("Could not find pet with the specified id");
+               return StatusCode(404,"Could not find pet with the specified id");
 
            }
            else
            {
-               return Ok();
+               return StatusCode(202, "accepted");
            }
         }
 
@@ -69,11 +101,11 @@ namespace PetShop_RestAPI.Controllers
         {
             if (_petService.DeletePet(id) == false)
             {
-                return BadRequest("Could not delete pet");
+                return StatusCode(404, "Could not find pet with the specified id");
 
             }
 
-            return Ok();
+            return StatusCode(202, "accepted");
         }
     }
 }

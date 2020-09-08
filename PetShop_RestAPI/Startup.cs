@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Petshop.core.ApplicationServices;
 using Petshop.core.DomainServices;
+using Petshop.Core.Entity;
 using Petshop.infraStructure.Data;
 
 namespace PetShop_RestAPI
@@ -30,6 +31,8 @@ namespace PetShop_RestAPI
         {
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
+            services.AddScoped<IOwnerRepository, OwnerRepository>();
+            services.AddScoped<IOwnerService, OwnerService>();
             services.AddControllers();
         }
 

@@ -23,9 +23,16 @@ namespace PetShop_RestAPI.Controllers
 
         // GET: api/<OwnersController>
         [HttpGet]
-        public IEnumerable<Owner> Get()
+        public ActionResult<IEnumerable<Owner>> Get()
         {
-            return OwnerService.GetOwners();
+            try
+            {
+                return Ok(OwnerService.GetOwners());
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         // GET api/<OwnersController>/5
