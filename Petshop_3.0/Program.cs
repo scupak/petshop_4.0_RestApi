@@ -16,9 +16,7 @@ namespace Petshop.UI
             
             IOwnerService ownerService = new OwnerService(ownerRepository);
 
-            DataInitializer dataInitializer = new DataInitializer(petRepository,ownerRepository);
-
-            dataInitializer.InitData();
+            FakeDB.InitData();
 
 
 
