@@ -37,20 +37,39 @@ namespace PetShop_RestAPI.Controllers
 
         // GET api/<OwnersController>/5
         [HttpGet("{id}")]
-        public Owner Get(int id)
+        public ActionResult<Owner> Get(int id)
         {
-            return OwnerService.GetOwnerById(id);
+            try
+            {
+
+                Owner owner = OwnerService.GetOwnerById(id);
+                if (owner == null)
+                {
+                    return StatusCode(404, "did not find owner");
+
+                }
+                return Ok(owner);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e);
+            }
         }
 
         // POST api/<OwnersController>
         [HttpPost]
         public ActionResult<Owner> Post([FromBody] Owner value)
         {
-            if (string.IsNullOrEmpty(value.FirstName))
+            try
             {
-                return BadRequest("FirstName is required to create an Owner");
+                return string.IsNullOrEmpty(value.FirstName) ? BadRequest("Name is required to create a pet") : StatusCode(201, OwnerService.CreateOwner(value));
             }
-            return Ok(OwnerService.CreateOwner(value));
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e);
+            }
         }
 
         // PUT api/<OwnersController>/5
