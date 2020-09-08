@@ -63,7 +63,7 @@ namespace PetShop_RestAPI.Controllers
         {
             try
             {
-                return string.IsNullOrEmpty(value.FirstName) ? BadRequest("Name is required to create a pet") : StatusCode(201, OwnerService.CreateOwner(value));
+                return string.IsNullOrEmpty(value.FirstName) ? BadRequest("Name is required to create an owner") : StatusCode(201, OwnerService.CreateOwner(value));
             }
             catch (Exception e)
             {
