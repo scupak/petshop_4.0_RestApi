@@ -4,8 +4,11 @@ using System.Text;
 
 namespace Petshop.Core.Entity
 {
-    public class Filter
+    class Type
     {
-        
+        public int Id { get; set; }
+
+        public string name { get; set; }
+
     }
 }

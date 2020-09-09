@@ -33,6 +33,7 @@ namespace PetShop_RestAPI.Controllers
             {
                 return StatusCode(500, e.Message);
             }
+
         }
 
         // GET api/<OwnersController>/5
@@ -80,12 +81,12 @@ namespace PetShop_RestAPI.Controllers
 
             if (OwnerService.EditOwner(value) == null)
             {
-                return BadRequest("Could not find Owner with the specified id");
+                return StatusCode(404,"Could not find Owner with the specified id");
 
             }
             else
             {
-                return Ok();
+                return StatusCode(202, "accepted");
             }
         }
 
@@ -95,11 +96,11 @@ namespace PetShop_RestAPI.Controllers
         {
             if (OwnerService.DeleteOwner(id) == false)
             {
-                return BadRequest("Could not delete Owner");
+                return StatusCode(404,"Could not delete Owner");
 
             }
 
-            return Ok();
+            return StatusCode(202, "accepted"); 
         }
     }
 }
