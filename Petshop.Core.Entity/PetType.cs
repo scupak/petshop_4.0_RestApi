@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Petshop.Core.Entity
 {
-    class Type
+    public class PetType
     {
         public int Id { get; set; }
 

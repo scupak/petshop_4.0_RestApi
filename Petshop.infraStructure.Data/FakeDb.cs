@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Petshop.Core.Entity;
 
+
 namespace Petshop.infraStructure.Data
 {
     public static class FakeDB
@@ -11,8 +12,19 @@ namespace Petshop.infraStructure.Data
         public static List<Pet> _pets;
         private static int _OwnerId = 1;
         public static List<Owner> _owners;
+        private static int _PetTypeId = 1;
+        public static List<PetType> _PetTypes;
         public static void InitData()
         {
+            _PetTypes = new List<PetType>
+            {
+                new PetType
+                {
+                    name = "dog",
+                    Id = _PetTypeId++,
+                    
+                }
+            };
            
 
             
@@ -41,7 +53,7 @@ namespace Petshop.infraStructure.Data
 
                     Id = _PetId++,
                     Name = "Jerry",
-                    PetType = PetType.Cat,
+                    PetType = _PetTypes[0],
                     Birthdate = DateTime.Now.AddYears(-12),
                     Color = "Blue",
                     //Owner = _owners[0],
@@ -66,6 +78,14 @@ namespace Petshop.infraStructure.Data
             owner.Id = _OwnerId++;
             _owners.Add(owner);
             return owner;
+        }
+
+        public static PetType AddPetType(PetType petType)
+        {
+
+            petType.Id = _PetTypeId++;
+            _PetTypes.Add(petType);
+            return petType;
         }
     }
 }
