@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Petshop.core.DomainServices;
 using Petshop.Core.Entity;
@@ -9,15 +10,30 @@ namespace Petshop.core.ApplicationServices
   public  class PetTypeService : IPetTypeService
     {
         private IPetTypeRepository _petTypeRepository;
+        private IPetRepository _petRepository;
 
-        public PetTypeService(IPetTypeRepository petTypeRepository)
+        public PetTypeService(IPetTypeRepository petTypeRepository, IPetRepository petRepository)
         {
             _petTypeRepository = petTypeRepository;
+            _petRepository = petRepository;
         }
 
         public PetType GetPetTypeById(int id)
         {
-            return _petTypeRepository.GetPetTypes().Find(x => x.Id == id);
+           PetType petType = _petTypeRepository.GetPetTypes().Find(x => x.Id == id);
+
+           PetType temPetType = new PetType
+           {
+               name = petType.name,
+               Id = petType.Id
+
+
+
+           };
+
+           temPetType.Pets = _petRepository.GetPets().Where(pet => pet.PetType.Id == petType.Id).ToList();
+
+           return temPetType;
         }
 
         public List<PetType> GetPetTypes()

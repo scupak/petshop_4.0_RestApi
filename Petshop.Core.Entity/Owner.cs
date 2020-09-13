@@ -13,6 +13,7 @@ namespace Petshop.Core.Entity
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
+        public List<Pet> Pets { get; set; }
 
 
         public Owner(string firstName, string lastName, string address, string phoneNumber, string email)

@@ -1,6 +1,7 @@
 ﻿using Petshop.core.DomainServices;
 using Petshop.Core.Entity;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Petshop.core.ApplicationServices
@@ -8,17 +9,42 @@ namespace Petshop.core.ApplicationServices
     public class PetService : IPetService
     {
         private IPetRepository _petRepository;
+        private IOwnerRepository _ownerRepository;
+        private IPetTypeRepository _petTypeRepository;
 
-        public PetService(IPetRepository petRepository)
+        public PetService(IPetRepository petRepository, IOwnerRepository ownerRepository, IPetTypeRepository petTypeRepository)
         {
             _petRepository = petRepository;
-
-
+            _ownerRepository = ownerRepository;
+            _petTypeRepository = petTypeRepository;
         }
 
         public Pet GetPetById(int id)
         {
-            return _petRepository.GetPets().Find(x => x.Id == id);
+            Pet pet = _petRepository.GetPets().Find(x => x.Id == id);
+
+            Pet temppet = new Pet
+            {
+                Owner = pet.Owner,
+                PetType = pet.PetType,
+                Name = pet.Name, 
+                Birthdate = pet.Birthdate,
+                Color = pet.Color,
+                Id = pet.Id,
+                Price = pet.Price,
+                SoldDate = pet.SoldDate,
+
+
+
+            };
+
+
+            temppet.Owner = _ownerRepository.GetOwners().Find(x => x.Id == pet.Owner.Id);
+
+            temppet.PetType = _petTypeRepository.GetPetTypes().Find(x => x.Id == pet.PetType.Id);
+
+            return temppet;
+
         }
 
         public List<Pet> GetPets()

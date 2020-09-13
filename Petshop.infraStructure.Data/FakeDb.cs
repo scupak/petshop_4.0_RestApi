@@ -53,10 +53,17 @@ namespace Petshop.infraStructure.Data
 
                     Id = _PetId++,
                     Name = "Jerry",
-                    PetType = _PetTypes[0],
+                    PetType = new PetType
+                    {
+                        Id = 1,
+                    },
                     Birthdate = DateTime.Now.AddYears(-12),
                     Color = "Blue",
-                    //Owner = _owners[0],
+                    Owner = new Owner
+                    {
+                        Id = 1,
+
+                    },
                     Price = 50,
                     SoldDate = DateTime.Now.AddYears(-2),
 
