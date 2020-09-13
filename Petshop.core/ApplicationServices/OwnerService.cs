@@ -35,7 +35,7 @@ namespace Petshop.core.ApplicationServices
             };
 
 
-            tempOwner.Pets = _petRepository.GetPets().Where(pet => pet.Owner.Id == owner.Id).ToList();
+            tempOwner.Pets = _petRepository.GetPets().List.Where(pet => pet.Owner.Id == owner.Id).ToList();
 
             return tempOwner;
         }

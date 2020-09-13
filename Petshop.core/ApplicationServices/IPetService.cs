@@ -1,5 +1,7 @@
 ﻿using Petshop.Core.Entity;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Petshop.Core.Filter;
 
 namespace Petshop.core.ApplicationServices
 {
@@ -7,7 +9,9 @@ namespace Petshop.core.ApplicationServices
     {
         public Pet GetPetById(int id);
 
-        public List<Pet> GetPets();
+        public FilteredList<Pet> GetPets(Filter filter);
+
+        public FilteredList<Pet> GetPets();
 
         public Pet CreatePet(Pet pet);
 

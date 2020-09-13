@@ -31,7 +31,7 @@ namespace Petshop.core.ApplicationServices
 
            };
 
-           temPetType.Pets = _petRepository.GetPets().Where(pet => pet.PetType.Id == petType.Id).ToList();
+           temPetType.Pets = _petRepository.GetPets().List.Where(pet => pet.PetType.Id == petType.Id).ToList();
 
            return temPetType;
         }

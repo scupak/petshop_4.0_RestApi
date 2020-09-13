@@ -1,5 +1,6 @@
 ﻿using Petshop.Core.Entity;
 using System.Collections.Generic;
+using Petshop.Core.Filter;
 
 namespace Petshop.core.DomainServices
 {
@@ -9,9 +10,11 @@ namespace Petshop.core.DomainServices
 
         public Pet EditPet(Pet pet, int index);
 
-        public List<Pet> GetPets();
+        public FilteredList<Pet> GetPets(Filter filter);
 
-        
+        public FilteredList<Pet> GetPets();
+
+
 
     }
 }

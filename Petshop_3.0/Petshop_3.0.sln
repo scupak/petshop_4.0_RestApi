@@ -19,7 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{3BEED2B9-6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infraStructure", "infraStructure", "{C1B99DE7-FC83-484F-BE4C-AEE3D1CD2676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Petshop.core.enums", "..\Petshop.core.enums\Petshop.core.enums.csproj", "{ABD03DBE-F0E6-435A-B441-AB7B5242D5CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Petshop.core.enums", "..\Petshop.core.enums\Petshop.core.enums.csproj", "{ABD03DBE-F0E6-435A-B441-AB7B5242D5CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Petshop.Core.Filter", "..\Petshop.Core.Filter\Petshop.Core.Filter.csproj", "{F12B599B-5542-44AB-AEFC-3D43A8A5CE37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{ABD03DBE-F0E6-435A-B441-AB7B5242D5CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABD03DBE-F0E6-435A-B441-AB7B5242D5CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABD03DBE-F0E6-435A-B441-AB7B5242D5CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F12B599B-5542-44AB-AEFC-3D43A8A5CE37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F12B599B-5542-44AB-AEFC-3D43A8A5CE37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F12B599B-5542-44AB-AEFC-3D43A8A5CE37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F12B599B-5542-44AB-AEFC-3D43A8A5CE37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{AF760FDC-F033-4D82-B6AD-EF3EEBFB5F1D} = {C1B99DE7-FC83-484F-BE4C-AEE3D1CD2676}
 		{D9EA5726-3436-411E-A94E-104A0DC018B4} = {EAED3025-A21D-41B7-A456-30C0C75B5852}
 		{ABD03DBE-F0E6-435A-B441-AB7B5242D5CA} = {3BEED2B9-6C5F-4564-9AEE-37B58BEA0F1B}
+		{F12B599B-5542-44AB-AEFC-3D43A8A5CE37} = {3BEED2B9-6C5F-4564-9AEE-37B58BEA0F1B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3E3F08EC-2BCC-4851-AEB6-6791591A2A9C}

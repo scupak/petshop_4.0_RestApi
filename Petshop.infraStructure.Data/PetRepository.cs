@@ -2,6 +2,8 @@
 using Petshop.Core.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Petshop.Core.Filter;
 
 namespace Petshop.infraStructure.Data
 {
@@ -33,9 +35,47 @@ namespace Petshop.infraStructure.Data
 
         }
 
-        public List<Pet> GetPets()
+        public FilteredList<Pet> GetPets(Filter filter)
         {
-            return FakeDB._pets;
+            var filteredList = new FilteredList<Pet>();
+
+            filteredList.TotalCount = FakeDB._pets.Count;
+            filteredList.FilterUsed = filter;
+
+            IEnumerable<Pet> filtering = FakeDB._pets;
+
+            if (!string.IsNullOrEmpty(filter.SearchText))
+            {
+                switch (filter.SearchField.ToLower())
+                {
+                    case "name":
+                        filtering = filtering.Where(c => c.Name.Contains(filter.SearchText));
+                        break;
+                    case "color":
+                        filtering = filtering.Where(c => c.Color.Contains(filter.SearchText));
+                        break;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(filter.OrderDirection) && !string.IsNullOrEmpty(filter.OrderProperty))
+            {
+                var prop = typeof(Pet).GetProperty(filter.OrderProperty);
+                filtering = "ASC".Equals(filter.OrderDirection) ?
+                    filtering.OrderBy(c => prop.GetValue(c, null)) :
+                    filtering.OrderByDescending(c => prop.GetValue(c, null));
+
+            }
+
+            filteredList.List = filtering.ToList();
+            return filteredList;
+        }
+
+        public FilteredList<Pet> GetPets()
+        {
+            var filteredList = new FilteredList<Pet>();
+
+            filteredList.List = FakeDB._pets;
+            return filteredList;
         }
     }
 }

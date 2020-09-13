@@ -3,6 +3,7 @@ using Petshop.Core.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Petshop.Core.Filter;
 
 namespace Petshop.core.ApplicationServices
 {
@@ -21,7 +22,7 @@ namespace Petshop.core.ApplicationServices
 
         public Pet GetPetById(int id)
         {
-            Pet pet = _petRepository.GetPets().Find(x => x.Id == id);
+            Pet pet = _petRepository.GetPets().List.Find(x => x.Id == id);
 
             Pet temppet = new Pet
             {
@@ -47,9 +48,20 @@ namespace Petshop.core.ApplicationServices
 
         }
 
-        public List<Pet> GetPets()
+        public FilteredList<Pet> GetPets(Filter filter)
         {
-            return _petRepository.GetPets();
+            if (!string.IsNullOrEmpty(filter.SearchText) && string.IsNullOrEmpty(filter.SearchField))
+            {
+                filter.SearchField = "name";
+            }
+
+            return _petRepository.GetPets(filter);
+        }
+
+        public FilteredList<Pet> GetPets()
+        {
+           return _petRepository.GetPets();
+
         }
 
         public Pet CreatePet(Pet pet)
@@ -64,9 +76,9 @@ namespace Petshop.core.ApplicationServices
          */
         public bool DeletePet(int id)
         {
-            if (_petRepository.GetPets().Find(x => x.Id == id) != null)
+            if (_petRepository.GetPets().List.Find(x => x.Id == id) != null)
             {
-                _petRepository.GetPets().Remove(_petRepository.GetPets().Find(x => x.Id == id));
+                _petRepository.GetPets().List.Remove(_petRepository.GetPets().List.Find(x => x.Id == id));
                 return true;
 
             }
@@ -79,7 +91,7 @@ namespace Petshop.core.ApplicationServices
 
         public Pet EditPet(Pet pet)
         {
-            int index = _petRepository.GetPets().FindLastIndex(c => c.Id == pet.Id);
+            int index = _petRepository.GetPets().List.FindLastIndex(c => c.Id == pet.Id);
 
             if (index == -1)
             {
