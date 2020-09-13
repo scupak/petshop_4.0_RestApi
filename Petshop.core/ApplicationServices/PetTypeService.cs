@@ -6,7 +6,7 @@ using Petshop.Core.Entity;
 
 namespace Petshop.core.ApplicationServices
 {
-    class PetTypeService : IPetTypeService
+  public  class PetTypeService : IPetTypeService
     {
         private IPetTypeRepository _petTypeRepository;
 

@@ -5,7 +5,7 @@ using Petshop.Core.Entity;
 
 namespace Petshop.core.ApplicationServices
 {
-    interface IPetTypeService
+   public interface IPetTypeService
     {
         public PetType GetPetTypeById(int id);
 
