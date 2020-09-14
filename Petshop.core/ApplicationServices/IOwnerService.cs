@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Petshop.Core.Entity;
+using Petshop.Core.Filter;
 
 namespace Petshop.core.ApplicationServices
 {
@@ -10,6 +11,8 @@ namespace Petshop.core.ApplicationServices
         public Owner GetOwnerById(int id);
 
         public List<Owner> GetOwners();
+
+        public FilteredList<Owner> GetOwners(Filter filter);
 
         public Owner CreateOwner(Owner owner);
 

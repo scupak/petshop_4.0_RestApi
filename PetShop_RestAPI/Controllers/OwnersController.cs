@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Petshop.core.ApplicationServices;
 using Petshop.Core.Entity;
+using Petshop.Core.Filter;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,11 +24,11 @@ namespace PetShop_RestAPI.Controllers
 
         // GET: api/<OwnersController>
         [HttpGet]
-        public ActionResult<IEnumerable<Owner>> Get()
+        public ActionResult<FilteredList<Owner>> Get([FromQuery] Filter filter)
         {
             try
             {
-                return Ok(OwnerService.GetOwners());
+                return Ok(OwnerService.GetOwners(filter));
             }
             catch (Exception e)
             {

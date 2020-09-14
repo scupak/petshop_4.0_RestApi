@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Petshop.core.DomainServices;
 using Petshop.Core.Entity;
+using Petshop.Core.Filter;
 
 namespace Petshop.core.ApplicationServices
 {
@@ -43,6 +44,16 @@ namespace Petshop.core.ApplicationServices
         public List<Owner> GetOwners()
         {
             return _ownerRepository.GetOwners();
+        }
+
+        public FilteredList<Owner> GetOwners(Filter filter)
+        {
+            if (!string.IsNullOrEmpty(filter.SearchText) && string.IsNullOrEmpty(filter.SearchField))
+            {
+                filter.SearchField = "firstname";
+            }
+
+            return _ownerRepository.GetOwners(filter);
         }
 
         public Owner CreateOwner(Owner owner)
