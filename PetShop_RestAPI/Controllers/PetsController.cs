@@ -23,6 +23,13 @@ namespace PetShop_RestAPI.Controllers
         }
 
         // GET: api/<PetsController>
+        /// <summary>
+        /// kurwa kurwa
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns> A FilteredList of pets </returns>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>  
         [HttpGet]
         public ActionResult<FilteredList<Pet>> Get([FromQuery] Filter filter)
         {
