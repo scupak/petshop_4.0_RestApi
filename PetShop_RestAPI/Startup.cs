@@ -41,12 +41,12 @@ namespace PetShop_RestAPI
                     Version = "v4",
                     Title = "Petshop API",
                     Description = "A simple example ASP.NET Core Web API",
-                    TermsOfService = new Uri("https://example.com/terms"),
+                   // TermsOfService = new Uri("https://example.com/terms"),
                     Contact = new OpenApiContact
                     {
                         Name = "scupak",
                         Email = string.Empty,
-                        Url = new Uri("https://twitter.com/spboyer"),
+                        //Url = new Uri("https://twitter.com/spboyer"),
                     },
                     
                 });

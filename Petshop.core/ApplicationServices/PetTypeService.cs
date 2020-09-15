@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Petshop.core.DomainServices;
 using Petshop.Core.Entity;
+using Petshop.Core.Filter;
 
 namespace Petshop.core.ApplicationServices
 {
@@ -39,6 +40,16 @@ namespace Petshop.core.ApplicationServices
         public List<PetType> GetPetTypes()
         {
             return _petTypeRepository.GetPetTypes();
+        }
+
+        public FilteredList<PetType> GetPetTypes(Filter filter)
+        {
+            if (!string.IsNullOrEmpty(filter.SearchText) && string.IsNullOrEmpty(filter.SearchField))
+            {
+                filter.SearchField = "name";
+            }
+
+            return _petTypeRepository.GetPets(filter);
         }
 
         public PetType CreatePetType(PetType petType)

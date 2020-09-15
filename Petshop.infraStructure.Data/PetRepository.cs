@@ -37,6 +37,7 @@ namespace Petshop.infraStructure.Data
 
         public FilteredList<Pet> GetPets(Filter filter)
         {
+
             var filteredList = new FilteredList<Pet>();
 
             filteredList.TotalCount = FakeDB._pets.Count;
