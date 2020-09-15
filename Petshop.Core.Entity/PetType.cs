@@ -12,5 +12,7 @@ namespace Petshop.Core.Entity
 
         public List<Pet> Pets { get; set; }
 
+        
+
     }
 }

@@ -80,14 +80,16 @@ namespace PetShop_RestAPI.Controllers
         {
             value.Id = id;
 
-            if (_petTypeService.EditPetType(value) == null)
+            PetType petType = _petTypeService.EditPetType(value);
+
+            if (petType == null)
             {
                 return StatusCode(404, "Could not find PetType with the specified id");
 
             }
             else
             {
-                return StatusCode(202, "accepted");
+                return StatusCode(202, petType);
             }
         }
 
@@ -95,13 +97,23 @@ namespace PetShop_RestAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult<PetType> Delete(int id)
         {
-            if (_petTypeService.DeletePetType(id) == false)
+            try
             {
-                return StatusCode(404, "Could not delete PetType");
+                PetType petType = _petTypeService.DeletePetType(id);
+                if (petType == null)
+                {
+                    return StatusCode(404, "Could not find the petType with the specified id");
 
+                }
+
+
+                return StatusCode(202, petType);
             }
-
-            return StatusCode(202, "accepted");
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(404, e);
+            }
         }
     }
 }

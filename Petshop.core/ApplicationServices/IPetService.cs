@@ -15,7 +15,7 @@ namespace Petshop.core.ApplicationServices
 
         public Pet CreatePet(Pet pet);
 
-        public bool DeletePet(int id);
+        public Pet DeletePet(int id);
 
         public Pet EditPet(Pet pet);
 

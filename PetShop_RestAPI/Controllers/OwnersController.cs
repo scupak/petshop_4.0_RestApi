@@ -80,14 +80,16 @@ namespace PetShop_RestAPI.Controllers
         {
             value.Id = id;
 
-            if (OwnerService.EditOwner(value) == null)
+            Owner owner = OwnerService.EditOwner(value);
+
+            if (owner == null)
             {
                 return StatusCode(404,"Could not find Owner with the specified id");
 
             }
             else
             {
-                return StatusCode(202, "accepted");
+                return StatusCode(202, owner);
             }
         }
 
@@ -95,13 +97,23 @@ namespace PetShop_RestAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Owner> Delete(int id)
         {
-            if (OwnerService.DeleteOwner(id) == false)
+            try
             {
-                return StatusCode(404,"Could not delete Owner");
+                Owner owner = OwnerService.DeleteOwner(id);
+                if (owner == null)
+                {
+                    return StatusCode(404, "Could not find the owner with the specified id");
 
+                }
+
+
+                return StatusCode(202, owner);
             }
-
-            return StatusCode(202, "accepted"); 
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(404, e);
+            }
         }
     }
 }

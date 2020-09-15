@@ -49,7 +49,7 @@ namespace Petshop.core.ApplicationServices
                 filter.SearchField = "name";
             }
 
-            return _petTypeRepository.GetPets(filter);
+            return _petTypeRepository.GetPetTypes(filter);
         }
 
         public PetType CreatePetType(PetType petType)
@@ -57,17 +57,18 @@ namespace Petshop.core.ApplicationServices
             return _petTypeRepository.AddPetType(petType);
         }
 
-        public bool DeletePetType(int id)
+        public PetType DeletePetType(int id)
         {
-            if (_petTypeRepository.GetPetTypes().Find(x => x.Id == id) != null)
+            PetType petType = _petTypeRepository.GetPetTypes().Find(x => x.Id == id);
+            if (petType != null)
             {
-                _petTypeRepository.GetPetTypes().Remove(_petTypeRepository.GetPetTypes().Find(x => x.Id == id));
-                return true;
+                _petTypeRepository.GetPetTypes().Remove(petType);
+                return petType;
 
             }
             else
             {
-                return false;
+                throw new KeyNotFoundException("Could not find an owner to delete ");
             }
         }
 

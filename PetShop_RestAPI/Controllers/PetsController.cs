@@ -93,15 +93,16 @@ namespace PetShop_RestAPI.Controllers
         public ActionResult<Pet> Put(int id, [FromBody] Pet value)
         {
             value.Id = id;
+            Pet pet = _petService.EditPet(value);
 
-           if( _petService.EditPet(value) == null)
+           if ( pet == null)
            {
                return StatusCode(404,"Could not find pet with the specified id");
 
            }
            else
            {
-               return StatusCode(202, "accepted");
+               return StatusCode(202, pet);
            }
         }
 
@@ -109,13 +110,24 @@ namespace PetShop_RestAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Pet> Delete(int id)
         {
-            if (_petService.DeletePet(id) == false)
+            try
             {
-                return StatusCode(404, "Could not find pet with the specified id");
+                Pet pet = _petService.DeletePet(id);
+                if (pet == null)
+                {
+                    return StatusCode(404, "Could not find pet with the specified id");
 
+                }
+             
+
+                return StatusCode(202, pet);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(404, e);
             }
 
-            return StatusCode(202, "accepted");
         }
     }
 }

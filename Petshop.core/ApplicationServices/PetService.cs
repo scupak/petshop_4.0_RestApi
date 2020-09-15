@@ -1,6 +1,7 @@
 ﻿using Petshop.core.DomainServices;
 using Petshop.Core.Entity;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using Petshop.Core.Filter;
@@ -74,17 +75,18 @@ namespace Petshop.core.ApplicationServices
         /**
          * TODO refactor so you dont have to use find twice. 
          */
-        public bool DeletePet(int id)
+        public Pet DeletePet(int id)
         {
-            if (_petRepository.GetPets().List.Find(x => x.Id == id) != null)
+            Pet pet = _petRepository.GetPets().List.Find(x => x.Id == id);
+            if ( pet != null)
             {
-                _petRepository.GetPets().List.Remove(_petRepository.GetPets().List.Find(x => x.Id == id));
-                return true;
+                _petRepository.GetPets().List.Remove(pet);
+                return pet;
 
             }
             else
             {
-                return false;
+                 throw new KeyNotFoundException("Could not find a pet to delete ");
             }
 
         }

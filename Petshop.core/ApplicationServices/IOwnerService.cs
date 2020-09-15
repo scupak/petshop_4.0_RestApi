@@ -16,7 +16,7 @@ namespace Petshop.core.ApplicationServices
 
         public Owner CreateOwner(Owner owner);
 
-        public bool DeleteOwner(int id);
+        public Owner DeleteOwner(int id);
 
         public Owner EditOwner(Owner owner);
 
