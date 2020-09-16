@@ -63,6 +63,14 @@ namespace Petshop.core.ApplicationServices
             if (petType != null)
             {
                 _petTypeRepository.GetPetTypes().Remove(petType);
+
+                //delete all the pets with the deleted petType. 
+                foreach (Pet pet in _petRepository.GetPets().List.Where(pet => pet.PetType.Id == petType.Id).ToList())
+                {
+                    _petRepository.GetPets().List.Remove(pet);
+
+                }
+
                 return petType;
 
             }
