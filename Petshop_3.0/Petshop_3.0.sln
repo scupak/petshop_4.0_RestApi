@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infraStructure", "infraStru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Petshop.core.enums", "..\Petshop.core.enums\Petshop.core.enums.csproj", "{ABD03DBE-F0E6-435A-B441-AB7B5242D5CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Petshop.Core.Filter", "..\Petshop.Core.Filter\Petshop.Core.Filter.csproj", "{F12B599B-5542-44AB-AEFC-3D43A8A5CE37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Petshop.Core.Filter", "..\Petshop.Core.Filter\Petshop.Core.Filter.csproj", "{F12B599B-5542-44AB-AEFC-3D43A8A5CE37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
