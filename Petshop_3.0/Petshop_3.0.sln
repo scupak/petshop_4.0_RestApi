@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Petshop.core.enums", "..\Pe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Petshop.Core.Filter", "..\Petshop.Core.Filter\Petshop.Core.Filter.csproj", "{F12B599B-5542-44AB-AEFC-3D43A8A5CE37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Petshop.Infrastructure.sqlite.Data", "..\Petshop.Infrastructure.sqlite.data\Petshop.Infrastructure.sqlite.Data.csproj", "{EAD01932-AE2F-4F6C-929D-5377F8B8FA8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Petshop.Infrastructure.Db.Data", "..\Petshop.Infrastructure.sqlite.data\Petshop.Infrastructure.Db.Data.csproj", "{EAD01932-AE2F-4F6C-929D-5377F8B8FA8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

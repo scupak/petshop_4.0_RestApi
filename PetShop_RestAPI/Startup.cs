@@ -14,11 +14,13 @@ using Newtonsoft.Json;
 using Petshop.core.ApplicationServices;
 using Petshop.core.DomainServices;
 using Petshop.Core.Entity;
-using Petshop.infraStructure.Data;
 using System;
 using System.Reflection;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Petshop.Infrastructure.Db.Data;
+using Petshop.Infrastructure.Db.Data.Repositories;
 
 namespace PetShop_RestAPI
 {
@@ -55,6 +57,11 @@ namespace PetShop_RestAPI
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+
+            services.AddDbContext<Context>(
+                opt => opt.UseSqlite("Data Source=PetShop.db"));
+
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
             services.AddScoped<IOwnerRepository, OwnerRepository>();
@@ -84,20 +91,97 @@ namespace PetShop_RestAPI
                 c.RoutePrefix = string.Empty;
 
             });
+          
 
-            // if (env.IsDevelopment())
-            // {
-            app.UseDeveloperExceptionPage();
-                FakeDB.InitData();
-                /**
-                 *
-                 
+            if (env.IsDevelopment())
+            { 
+                app.UseDeveloperExceptionPage();
+
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    var repo = scope.ServiceProvider.ge
+                    var context = scope.ServiceProvider.GetService<Context>();
+
+                    var petType1 = context.PetTypes.Add(new PetType()
+                    {
+                        name = "cat"
+
+
+                    }).Entity;
+
+                    var pet1 = context.Pets.Add(new Pet()
+                    {
+
+
+                        Name = "Jerry",
+                        Birthdate = DateTime.Now.AddYears(-12),
+                        Color = "Blue",
+                        PetType = petType1,
+                        Price = 50,
+                        SoldDate = DateTime.Now.AddYears(-2),
+
+                    }).Entity;
+
+                    context.Pets.Add(new Pet()
+                    {
+                        Name = "jake",
+                        Birthdate = DateTime.Now.AddYears(-12),
+                        Color = "Blue",
+                        Price = 50,
+                        SoldDate = DateTime.Now.AddYears(-2),
+                    });
+
+                    context.SaveChanges();
                 }
-                */
-          //  }
+
+
+            }
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var petRepo = scope.ServiceProvider.GetService<IPetRepository>();
+                var ownerRepo = scope.ServiceProvider.GetService<IOwnerRepository>();
+                var petTypeRepo = scope.ServiceProvider.GetService<IPetTypeRepository>();
+                var context = scope.ServiceProvider.GetService<Context>();
+
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                var petType1 = context.PetTypes.Add(new PetType()
+                {
+                    name = "cat"
+
+
+                }).Entity;
+
+                var pet1 = context.Pets.Add(new Pet()
+                {
+
+
+                    Name = "Jerry",
+                    Birthdate = DateTime.Now.AddYears(-12),
+                    Color = "Blue",
+                    PetType = petType1,
+                    Price = 50,
+                    SoldDate = DateTime.Now.AddYears(-2),
+
+                }).Entity;
+
+                context.Pets.Add(new Pet()
+                {
+                    Name = "jake",
+                    Birthdate = DateTime.Now.AddYears(-12),
+                    Color = "Blue",
+                    Price = 50,
+                    SoldDate = DateTime.Now.AddYears(-2),
+                });
+
+                context.SaveChanges();
+            
+                
+
+                // new DataInitializer(petRepo, ownerRepo, petTypeRepo).InitData(); 
+            }
+            //  }
 
             app.UseHttpsRedirection();
 

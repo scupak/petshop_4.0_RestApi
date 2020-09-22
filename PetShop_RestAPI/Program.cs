@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Petshop.core.ApplicationServices;
 using Petshop.core.DomainServices;
-using Petshop.infraStructure.Data;
+
 
 namespace PetShop_RestAPI
 {
