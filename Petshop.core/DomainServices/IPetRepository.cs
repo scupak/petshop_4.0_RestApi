@@ -10,6 +10,8 @@ namespace Petshop.core.DomainServices
 
         public Pet EditPet(Pet pet, int index);
 
+        public Pet DeletePet(int id);
+
         public FilteredList<Pet> GetPets(Filter filter);
 
         public FilteredList<Pet> GetPets();

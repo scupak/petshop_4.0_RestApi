@@ -23,7 +23,13 @@ namespace Petshop.core.ApplicationServices
 
         public Pet GetPetById(int id)
         {
-            Pet pet = _petRepository.GetPets().List.Find(x => x.Id == id);
+            Pet pet = _petRepository.GetPets(new Filter()).List.Find(x => x.Id == id);
+
+            if (pet == null)
+            {
+                return null;
+
+            }
 
             Pet temppet = new Pet
             {
@@ -40,11 +46,11 @@ namespace Petshop.core.ApplicationServices
 
             };
 
-
+            /*
             temppet.Owner = _ownerRepository.GetOwners().Find(x => x.Id == pet.Owner.Id);
 
             temppet.PetType = _petTypeRepository.GetPetTypes().Find(x => x.Id == pet.PetType.Id);
-
+            */
             return temppet;
 
         }
@@ -77,23 +83,13 @@ namespace Petshop.core.ApplicationServices
          */
         public Pet DeletePet(int id)
         {
-            Pet pet = _petRepository.GetPets().List.Find(x => x.Id == id);
-            if ( pet != null)
-            {
-                _petRepository.GetPets().List.Remove(pet);
-                return pet;
-
-            }
-            else
-            {
-                 throw new KeyNotFoundException("Could not find a pet to delete ");
-            }
+            return _petRepository.DeletePet(id);
 
         }
 
         public Pet EditPet(Pet pet)
         {
-            int index = _petRepository.GetPets().List.FindLastIndex(c => c.Id == pet.Id);
+            int index = _petRepository.GetPets(new Filter()).List.FindLastIndex(c => c.Id == pet.Id);
 
             if (index == -1)
             {

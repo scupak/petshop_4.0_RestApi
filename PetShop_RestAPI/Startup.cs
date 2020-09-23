@@ -136,48 +136,52 @@ namespace PetShop_RestAPI
 
             }
 
-            using (var scope = app.ApplicationServices.CreateScope())
+            if (env.IsDevelopment())
             {
-                var petRepo = scope.ServiceProvider.GetService<IPetRepository>();
-                var ownerRepo = scope.ServiceProvider.GetService<IOwnerRepository>();
-                var petTypeRepo = scope.ServiceProvider.GetService<IPetTypeRepository>();
-                var context = scope.ServiceProvider.GetService<Context>();
 
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-
-                var petType1 = context.PetTypes.Add(new PetType()
+                using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    name = "cat"
+                    var petRepo = scope.ServiceProvider.GetService<IPetRepository>();
+                    var ownerRepo = scope.ServiceProvider.GetService<IOwnerRepository>();
+                    var petTypeRepo = scope.ServiceProvider.GetService<IPetTypeRepository>();
+                    var context = scope.ServiceProvider.GetService<Context>();
+
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
+
+                    var petType1 = context.PetTypes.Add(new PetType()
+                    {
+                        name = "cat"
 
 
-                }).Entity;
+                    }).Entity;
 
-                var pet1 = context.Pets.Add(new Pet()
-                {
+                    var pet1 = context.Pets.Add(new Pet()
+                    {
 
 
-                    Name = "Jerry",
-                    Birthdate = DateTime.Now.AddYears(-12),
-                    Color = "Blue",
-                    PetType = petType1,
-                    Price = 50,
-                    SoldDate = DateTime.Now.AddYears(-2),
+                        Name = "Jerry",
+                        Birthdate = DateTime.Now.AddYears(-12),
+                        Color = "Blue",
+                        PetType = petType1,
+                        Price = 50,
+                        SoldDate = DateTime.Now.AddYears(-2),
 
-                }).Entity;
+                    }).Entity;
 
-                context.Pets.Add(new Pet()
-                {
-                    Name = "jake",
-                    Birthdate = DateTime.Now.AddYears(-12),
-                    Color = "Blue",
-                    Price = 50,
-                    SoldDate = DateTime.Now.AddYears(-2),
-                });
+                    context.Pets.Add(new Pet()
+                    {
+                        Name = "jake",
+                        PetType = petType1,
+                        Birthdate = DateTime.Now.AddYears(-12),
+                        Color = "Blue",
+                        Price = 50,
+                        SoldDate = DateTime.Now.AddYears(-2),
+                    });
 
-                context.SaveChanges();
-            
-                
+                    context.SaveChanges();
+
+                }
 
                 // new DataInitializer(petRepo, ownerRepo, petTypeRepo).InitData(); 
             }

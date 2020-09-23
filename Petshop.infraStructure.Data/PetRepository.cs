@@ -35,6 +35,21 @@ namespace Petshop.infraStructure.Data
 
         }
 
+        public Pet DeletePet(int id)
+        {
+            Pet pet = FakeDB._pets.Find(x => x.Id == id);
+            if (pet != null)
+            {
+                FakeDB._pets.Remove(pet);
+                return pet;
+
+            }
+            else
+            {
+                throw new KeyNotFoundException("Could not find a pet to delete ");
+            }
+        }
+
         public FilteredList<Pet> GetPets(Filter filter)
         {
 

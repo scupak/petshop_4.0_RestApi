@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Petshop.core.DomainServices;
 using Petshop.Core.Entity;
 using Petshop.Core.Filter;
@@ -33,16 +34,32 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             throw new NotImplementedException();
         }
 
+        public Pet DeletePet(int id)
+        {
+            Pet pet = _context.Pets.ToList().Find(x => x.Id == id);
+            if (pet != null)
+            {
+                var returnPet = _context.Pets.Remove(pet).Entity;
+                _context.SaveChanges();
+                return returnPet;
+
+            }
+            else
+            {
+                throw new KeyNotFoundException("Could not find a pet to delete ");
+            }
+        }
+
         public FilteredList<Pet> GetPets(Filter filter)
         {
 
 
             var filteredList = new FilteredList<Pet>();
 
-            filteredList.TotalCount = _context.Pets.ToList().Count;
+            filteredList.TotalCount = _context.Pets.Count();
             filteredList.FilterUsed = filter;
 
-            IEnumerable<Pet> filtering = _context.Pets.ToList();
+            IEnumerable<Pet> filtering = _context.Pets.Include(p => p.PetType).ToList();
 
             if (!string.IsNullOrEmpty(filter.SearchText))
             {
