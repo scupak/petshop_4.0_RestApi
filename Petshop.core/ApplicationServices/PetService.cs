@@ -73,7 +73,31 @@ namespace Petshop.core.ApplicationServices
 
         public Pet CreatePet(Pet pet)
         {
-            return _petRepository.AddPet(pet);
+            if (pet.PetType != null)
+            {
+                var petType = _petTypeRepository.GetPetTypes().FirstOrDefault(p => p.Id == pet.PetType.Id);
+                if (petType == null)
+                {
+                    throw new InvalidDataException("PetType must exist in the database");
+                }
+
+
+                if (pet.Owner != null)
+                {
+                    var owner = _ownerRepository.GetOwners().FirstOrDefault(o => o.Id == pet.Owner.Id);
+
+                    if (owner == null)
+                    {
+                        throw new InvalidDataException("Owner must exist in the database");
+                    }
+                }
+
+                return _petRepository.AddPet(pet);
+
+            }
+
+            throw new InvalidDataException("PetType must exist in the database");
+
 
 
         }

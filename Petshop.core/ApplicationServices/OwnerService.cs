@@ -21,6 +21,7 @@ namespace Petshop.core.ApplicationServices
 
         public Owner GetOwnerById(int id)
         {
+            /*
             Owner owner = _ownerRepository.GetOwners().Find(x => x.Id == id);
 
             Owner tempOwner = new Owner
@@ -39,6 +40,8 @@ namespace Petshop.core.ApplicationServices
             tempOwner.Pets = _petRepository.GetPets().List.Where(pet => pet.Owner.Id == owner.Id).ToList();
 
             return tempOwner;
+            */
+          return  _ownerRepository.GetOwnerById(id);
         }
 
         public List<Owner> GetOwners()

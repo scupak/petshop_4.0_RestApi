@@ -19,10 +19,31 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
         }
 
         public Pet AddPet(Pet pet)
-        {
+        {/**
+          * if (address.City != null)
+            {
+                _ctx.Attach(address.City).State = EntityState.Unchanged;
+            }
+            var addressEntry = _ctx.Add(address);
+            _ctx.SaveChanges();
+            return addressEntry.Entity;
+
             /**
              *  return FakeDB.AddPet(pet);
              */
+
+            if (pet.PetType != null)
+            {
+                _context.Attach(pet.PetType).State = EntityState.Unchanged;
+            }
+
+            if (pet.Owner != null)
+            {
+
+                _context.Attach(pet.Owner).State = EntityState.Unchanged;
+            }
+
+
             var returnPet =_context.Pets.Add(pet).Entity;
             _context.SaveChanges();
             return returnPet;
@@ -59,7 +80,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             filteredList.TotalCount = _context.Pets.Count();
             filteredList.FilterUsed = filter;
 
-            IEnumerable<Pet> filtering = _context.Pets.Include(p => p.PetType).ToList();
+            IEnumerable<Pet> filtering = _context.Pets.Include(p => p.PetType).Include(p => p.Owner).ToList();
 
             if (!string.IsNullOrEmpty(filter.SearchText))
             {

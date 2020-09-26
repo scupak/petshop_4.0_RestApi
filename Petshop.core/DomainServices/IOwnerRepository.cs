@@ -15,6 +15,8 @@ namespace Petshop.core.DomainServices
         public List<Owner> GetOwners();
         public FilteredList<Owner> GetOwners(Filter filter);
 
+        public Owner GetOwnerById(int id);
+
 
     }
 }

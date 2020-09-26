@@ -16,6 +16,8 @@ namespace Petshop.core.DomainServices
 
         public FilteredList<Pet> GetPets();
 
+        
+
 
 
     }

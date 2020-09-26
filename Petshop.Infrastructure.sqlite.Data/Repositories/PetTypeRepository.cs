@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Petshop.core.DomainServices;
 using Petshop.Core.Entity;
 using Petshop.Core.Filter;
@@ -29,7 +30,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
 
         public List<PetType> GetPetTypes()
         {
-            return _context.PetTypes.ToList();
+            return _context.PetTypes.AsNoTracking().ToList();
         }
 
         public FilteredList<PetType> GetPetTypes(Filter filter)
