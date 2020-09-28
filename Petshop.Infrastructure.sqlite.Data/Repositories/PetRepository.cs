@@ -112,7 +112,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
         {
             var filteredList = new FilteredList<Pet>();
 
-            filteredList.List = _context.Pets.ToList();
+            filteredList.List = _context.Pets.AsNoTracking().ToList();
             return filteredList;
         }
     }

@@ -36,6 +36,15 @@ namespace PetShop_RestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //CORS configuration 
+            services.AddCors(options => options.AddPolicy("AllowEverything", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -81,6 +90,8 @@ namespace PetShop_RestAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
+
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
@@ -132,6 +143,8 @@ namespace PetShop_RestAPI
 
                     context.SaveChanges();
                 }
+                //Enable CORS policy 
+                app.UseCors("AllowEverything");
 
 
             }
