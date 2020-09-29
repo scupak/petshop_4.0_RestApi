@@ -21,7 +21,7 @@ namespace Petshop.core.ApplicationServices
 
         public PetType GetPetTypeById(int id)
         {
-           PetType petType = _petTypeRepository.GetPetTypes().Find(x => x.Id == id);
+           PetType petType = _petTypeRepository.GetPetTypes(new Filter()).List.Find(x => x.Id == id);
 
            PetType temPetType = new PetType
            {
@@ -32,15 +32,11 @@ namespace Petshop.core.ApplicationServices
 
            };
 
-           temPetType.Pets = _petRepository.GetPets().List.Where(pet => pet.PetType.Id == petType.Id).ToList();
+           temPetType.Pets = _petRepository.GetPets(new Filter()).List.Where(pet => pet.PetType.Id == petType.Id).ToList();
 
            return temPetType;
         }
 
-        public List<PetType> GetPetTypes()
-        {
-            return _petTypeRepository.GetPetTypes();
-        }
 
         public FilteredList<PetType> GetPetTypes(Filter filter)
         {
@@ -59,15 +55,15 @@ namespace Petshop.core.ApplicationServices
 
         public PetType DeletePetType(int id)
         {
-            PetType petType = _petTypeRepository.GetPetTypes().Find(x => x.Id == id);
+            PetType petType = _petTypeRepository.GetPetTypes(new Filter()).List.Find(x => x.Id == id);
             if (petType != null)
             {
-                _petTypeRepository.GetPetTypes().Remove(petType);
+                _petTypeRepository.GetPetTypes(new Filter()).List.Remove(petType);
 
                 //delete all the pets with the deleted petType. 
-                foreach (Pet pet in _petRepository.GetPets().List.Where(pet => pet.PetType.Id == petType.Id).ToList())
+                foreach (Pet pet in _petRepository.GetPets(new Filter()).List.Where(pet => pet.PetType.Id == petType.Id).ToList())
                 {
-                    _petRepository.GetPets().List.Remove(pet);
+                    _petRepository.GetPets(new Filter()).List.Remove(pet);
 
                 }
 
@@ -82,7 +78,7 @@ namespace Petshop.core.ApplicationServices
 
         public PetType EditPetType(PetType petType)
         {
-            int index = _petTypeRepository.GetPetTypes().FindLastIndex(c => c.Id == petType.Id);
+            int index = _petTypeRepository.GetPetTypes(new Filter()).List.FindLastIndex(c => c.Id == petType.Id);
 
             return _petTypeRepository.EditPetType(petType, index);
         }

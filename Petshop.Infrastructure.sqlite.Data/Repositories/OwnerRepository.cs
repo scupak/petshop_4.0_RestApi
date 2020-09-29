@@ -31,11 +31,6 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Owner> GetOwners()
-        {
-            return _context.Owners.AsNoTracking().ToList();
-        }
-
         public FilteredList<Owner> GetOwners(Filter filter)
         {
             var filteredList = new FilteredList<Owner>();
@@ -43,7 +38,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             filteredList.TotalCount = _context.Owners.Count();
             filteredList.FilterUsed = filter;
 
-            IEnumerable<Owner> filtering = _context.Owners;
+            IEnumerable<Owner> filtering = _context.Owners.Include(owner => owner.Pets);
 
             if (!string.IsNullOrEmpty(filter.SearchText))
             {

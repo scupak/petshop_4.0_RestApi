@@ -65,17 +65,12 @@ namespace Petshop.core.ApplicationServices
             return _petRepository.GetPets(filter);
         }
 
-        public FilteredList<Pet> GetPets()
-        {
-           return _petRepository.GetPets();
-
-        }
 
         public Pet CreatePet(Pet pet)
         {
             if (pet.PetType != null)
             {
-                var petType = _petTypeRepository.GetPetTypes().FirstOrDefault(p => p.Id == pet.PetType.Id);
+                var petType = _petTypeRepository.GetPetTypes(new Filter()).List.FirstOrDefault(p => p.Id == pet.PetType.Id);
                 if (petType == null)
                 {
                     throw new InvalidDataException("PetType must exist in the database");
@@ -84,7 +79,7 @@ namespace Petshop.core.ApplicationServices
 
                 if (pet.Owner != null)
                 {
-                    var owner = _ownerRepository.GetOwners().FirstOrDefault(o => o.Id == pet.Owner.Id);
+                    var owner = _ownerRepository.GetOwners(new Filter()).List.FirstOrDefault(o => o.Id == pet.Owner.Id);
 
                     if (owner == null)
                     {

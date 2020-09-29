@@ -44,11 +44,6 @@ namespace Petshop.core.ApplicationServices
           return  _ownerRepository.GetOwnerById(id);
         }
 
-        public List<Owner> GetOwners()
-        {
-            return _ownerRepository.GetOwners();
-        }
-
         public FilteredList<Owner> GetOwners(Filter filter)
         {
             if (!string.IsNullOrEmpty(filter.SearchText) && string.IsNullOrEmpty(filter.SearchField))
@@ -66,10 +61,10 @@ namespace Petshop.core.ApplicationServices
 
         public Owner DeleteOwner(int id)
         {
-            Owner owner = _ownerRepository.GetOwners().Find(x => x.Id == id);
+            Owner owner = _ownerRepository.GetOwners(new Filter()).List.Find(x => x.Id == id);
             if (owner != null)
             {
-                _ownerRepository.GetOwners().Remove(owner);
+                _ownerRepository.GetOwners(new Filter()).List.Remove(owner);
                 return owner;
 
             }
@@ -81,7 +76,7 @@ namespace Petshop.core.ApplicationServices
 
         public Owner EditOwner(Owner owner)
         {
-            int index = _ownerRepository.GetOwners().FindLastIndex(c => c.Id == owner.Id);
+            int index = _ownerRepository.GetOwners(new Filter()).List.FindLastIndex(c => c.Id == owner.Id);
 
             return _ownerRepository.EditOwner(owner, index);
         }

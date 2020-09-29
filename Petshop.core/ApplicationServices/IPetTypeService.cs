@@ -10,8 +10,6 @@ namespace Petshop.core.ApplicationServices
     {
         public PetType GetPetTypeById(int id);
 
-        public List<PetType> GetPetTypes();
-
         public FilteredList<PetType> GetPetTypes(Filter filter);
 
         public PetType CreatePetType(PetType petType);

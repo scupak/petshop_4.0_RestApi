@@ -10,8 +10,6 @@ namespace Petshop.core.ApplicationServices
     {
         public Owner GetOwnerById(int id);
 
-        public List<Owner> GetOwners();
-
         public FilteredList<Owner> GetOwners(Filter filter);
 
         public Owner CreateOwner(Owner owner);

@@ -28,11 +28,6 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public List<PetType> GetPetTypes()
-        {
-            return _context.PetTypes.AsNoTracking().ToList();
-        }
-
         public FilteredList<PetType> GetPetTypes(Filter filter)
         {
             var filteredList = new FilteredList<PetType>();
