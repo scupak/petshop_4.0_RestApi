@@ -69,7 +69,11 @@ namespace PetShop_RestAPI
 
 
             services.AddDbContext<Context>(
-                opt => opt.UseSqlite("Data Source=PetShop.db"));
+                opt =>
+                {
+                    opt.UseSqlite("Data Source=PetShop.db").EnableSensitiveDataLogging();
+                },ServiceLifetime.Transient);
+
 
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
@@ -103,7 +107,7 @@ namespace PetShop_RestAPI
 
             });
           
-
+            /*
             if (env.IsDevelopment())
             { 
                 app.UseDeveloperExceptionPage();
@@ -143,12 +147,11 @@ namespace PetShop_RestAPI
 
                     context.SaveChanges();
                 }
-                //Enable CORS policy 
-                app.UseCors("AllowEverything");
+                
 
 
             }
-
+            */
             if (env.IsDevelopment())
             {
 
@@ -173,7 +176,7 @@ namespace PetShop_RestAPI
                     {
 
 
-                        Name = "Jerry",
+                        Name = "merry",
                         Birthdate = DateTime.Now.AddYears(-12),
                         Color = "Blue",
                         PetType = petType1,
@@ -195,14 +198,31 @@ namespace PetShop_RestAPI
                     context.SaveChanges();
 
                 }
-
+           
                 // new DataInitializer(petRepo, ownerRepo, petTypeRepo).InitData(); 
+            }
+            else
+            {
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    var petRepo = scope.ServiceProvider.GetService<IPetRepository>();
+                    var ownerRepo = scope.ServiceProvider.GetService<IOwnerRepository>();
+                    var petTypeRepo = scope.ServiceProvider.GetService<IPetTypeRepository>();
+                    var context = scope.ServiceProvider.GetService<Context>();
+
+
+                    context.Database.EnsureCreated();
+                }
+
             }
             //  }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            //Enable CORS policy 
+            app.UseCors("AllowEverything");
 
             app.UseAuthorization();
 
