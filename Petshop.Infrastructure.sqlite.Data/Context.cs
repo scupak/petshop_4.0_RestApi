@@ -13,7 +13,7 @@ namespace Petshop.Infrastructure.Db.Data
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<PetType> PetTypes { get; set; }
-        public DbSet<PetColor> PetColors { get; set; }
+        public DbSet<Colour> PetColors { get; set; }
 
         public Context(DbContextOptions options) : base(options)
         {
@@ -33,7 +33,8 @@ namespace Petshop.Infrastructure.Db.Data
                 .WithMany(owner => owner.Pets)
                 .OnDelete(DeleteBehavior.SetNull);
 
-
+            modelBuilder.Entity<ColourPet>()
+                .HasKey(x => new {x.PetId, x.ColourId});
 
         }
     }

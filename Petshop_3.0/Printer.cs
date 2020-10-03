@@ -279,7 +279,7 @@ namespace Petshop.UI
 
                             Console.WriteLine(_PetService.GetPetById(idSelection));
                             Pet editedPet = new Pet(selectedPet.Name,selectedPet.Birthdate,selectedPet.Color,selectedPet.Owner,selectedPet.Price,selectedPet.PetType,selectedPet.SoldDate);
-                            editedPet.Id = selectedPet.Id;
+                            editedPet.PetId = selectedPet.PetId;
                             Console.ReadLine();
                             Console.WriteLine("Select what part of the pet you want to edit");
 

@@ -8,10 +8,10 @@ using Petshop.Core.Filter;
 
 namespace Petshop.core.DomainServices
 {
-  public  interface IPetColorRepository
+  public  interface IColourRepository
     {
-      public PetColor AddColor(PetColor color);
+      public Colour AddColor(Colour color);
 
-      public FilteredList<PetColor> GetColors(Filter filter);
+      public FilteredList<Colour> GetColors(Filter filter);
     }
 }

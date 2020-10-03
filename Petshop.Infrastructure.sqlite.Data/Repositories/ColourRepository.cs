@@ -8,22 +8,22 @@ using Petshop.Core.Filter;
 
 namespace Petshop.Infrastructure.Db.Data.Repositories
 {
-    public class PetColorRepository : IPetColorRepository
+    public class ColourRepository : IColourRepository
     {
 
         readonly Context _context;
 
-        public PetColorRepository(Context context)
+        public ColourRepository(Context context)
         {
             _context = context;
         }
 
-        public PetColor AddColor(PetColor color)
+        public Colour AddColor(Colour color)
         {
             throw new NotImplementedException();
         }
 
-        public FilteredList<PetColor> GetColors(Filter filter)
+        public FilteredList<Colour> GetColors(Filter filter)
         {
             throw new NotImplementedException();
         }

@@ -37,7 +37,7 @@ namespace Petshop.infraStructure.Data
 
         public Pet DeletePet(int id)
         {
-            Pet pet = FakeDB._pets.Find(x => x.Id == id);
+            Pet pet = FakeDB._pets.Find(x => x.PetId == id);
             if (pet != null)
             {
                 FakeDB._pets.Remove(pet);

@@ -22,18 +22,18 @@ namespace Petshop.core.ApplicationServices
         public PetType GetPetTypeById(int id)
         {
             /*
-           PetType petType = _petTypeRepository.GetPetTypes(new Filter()).List.Find(x => x.Id == id);
+           PetType petType = _petTypeRepository.GetPetTypes(new Filter()).List.Find(x => x.ColourId == id);
 
            PetType temPetType = new PetType
            {
                name = petType.name,
-               Id = petType.Id
+               ColourId = petType.ColourId
 
 
 
            };
 
-           temPetType.Pets = _petRepository.GetPets(new Filter()).List.Where(pet => pet.PetType.Id == petType.Id).ToList();
+           temPetType.Pets = _petRepository.GetPets(new Filter()).List.Where(pet => pet.PetType.ColourId == petType.ColourId).ToList();
 
            return temPetType;
             */
@@ -59,13 +59,13 @@ namespace Petshop.core.ApplicationServices
         public PetType DeletePetType(int id)
         {
             /*
-            PetType petType = _petTypeRepository.GetPetTypes(new Filter()).List.Find(x => x.Id == id);
+            PetType petType = _petTypeRepository.GetPetTypes(new Filter()).List.Find(x => x.ColourId == id);
             if (petType != null)
             {
                 _petTypeRepository.GetPetTypes(new Filter()).List.Remove(petType);
 
                 //delete all the pets with the deleted petType. 
-                foreach (Pet pet in _petRepository.GetPets(new Filter()).List.Where(pet => pet.PetType.Id == petType.Id).ToList())
+                foreach (Pet pet in _petRepository.GetPets(new Filter()).List.Where(pet => pet.PetType.ColourId == petType.ColourId).ToList())
                 {
                     _petRepository.GetPets(new Filter()).List.Remove(pet);
 
@@ -85,9 +85,33 @@ namespace Petshop.core.ApplicationServices
 
         public PetType EditPetType(PetType petType)
         {
-            int index = _petTypeRepository.GetPetTypes(new Filter()).List.FindLastIndex(c => c.Id == petType.Id);
+            /* if (owner == null)
+            {
+                throw new ArgumentException("The sent data is null");
+            }
 
-            return _petTypeRepository.EditPetType(petType, index);
+            int index = _ownerRepository.GetOwners(new Filter()).List.FindLastIndex(c => c.ColourId == owner.ColourId);
+
+            if (index == -1)
+            {
+                throw  new KeyNotFoundException("owner needs to exist in database");
+*/
+
+            if (petType == null)
+            {
+                throw new ArgumentException("The sent data is null");
+            }
+
+            
+
+
+            if (_petTypeRepository.GetPetTypeById(petType.Id) == null)
+            {
+                throw new KeyNotFoundException("petType needs to exist in database");
+
+            }
+            
+            return _petTypeRepository.EditPetType(petType, 1);
         }
     }
 }

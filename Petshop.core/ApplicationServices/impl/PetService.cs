@@ -82,7 +82,7 @@ namespace Petshop.core.ApplicationServices
 
             if (pet.PetType != null)
             {
-                int index = _petRepository.GetPets(new Filter()).List.FindLastIndex(c => c.Id == pet.Id);
+                int index = _petRepository.GetPets(new Filter()).List.FindLastIndex(c => c.PetId == pet.PetId);
 
                 if (index == -1)
                 {

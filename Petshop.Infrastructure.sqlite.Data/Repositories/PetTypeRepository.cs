@@ -20,12 +20,18 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
 
         public PetType AddPetType(PetType petType)
         {
-            throw new NotImplementedException();
+            var returnPetType = _context.PetTypes.Add(petType).Entity;
+            _context.SaveChanges();
+            return returnPetType;
         }
 
         public PetType EditPetType(PetType petType, int index)
         {
-            throw new NotImplementedException();
+            PetType returnPetType = _context.PetTypes.Update(petType).Entity;
+
+            _context.SaveChanges();
+
+            return returnPetType;
         }
 
         public FilteredList<PetType> GetPetTypes(Filter filter)
@@ -35,7 +41,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             filteredList.TotalCount = _context.PetTypes.ToList().Count;
             filteredList.FilterUsed = filter;
 
-            IEnumerable<PetType> filtering = _context.PetTypes.ToList();
+            IEnumerable<PetType> filtering = _context.PetTypes.AsNoTracking().ToList();
 
             if (!string.IsNullOrEmpty(filter.SearchText))
             {
@@ -64,7 +70,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
         
         public PetType GetPetTypeById(int id)
         {
-            PetType petType = _context.PetTypes.ToList().Find(x => x.Id == id);
+            PetType petType = _context.PetTypes.AsNoTracking().ToList().Find(x => x.Id == id);
 
             PetType temPetType = new PetType
             {
@@ -75,7 +81,8 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
 
             };
 
-            temPetType.Pets = _context.Pets.ToList().Where(pet => pet.PetType.Id == petType.Id).ToList();
+            temPetType.Pets = _context.Pets.AsNoTracking().Include(p => p.PetType).ToList().Where(pet => pet.PetType.Id == petType.Id).ToList();
+
 
             return temPetType;
         }

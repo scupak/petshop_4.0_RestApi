@@ -97,7 +97,7 @@ namespace PetShop_RestAPI.Controllers
 
             
 
-            value.Id = id;
+            value.PetId = id;
             Pet pet = _petService.EditPet(value);
 
            if ( pet == null)

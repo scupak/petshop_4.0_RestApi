@@ -78,6 +78,7 @@ namespace PetShop_RestAPI.Controllers
         [HttpPut("{id}")]
         public ActionResult<PetType> Put(int id, [FromBody] PetType value)
         {
+
             value.Id = id;
 
             PetType petType = _petTypeService.EditPetType(value);

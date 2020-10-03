@@ -28,7 +28,12 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
 
         public Owner EditOwner(Owner owner, int index)
         {
-            throw new NotImplementedException();
+          Owner returnOwner = _context.Owners.Update(owner).Entity;
+
+          _context.SaveChanges();
+
+          return returnOwner;
+
         }
 
         public FilteredList<Owner> GetOwners(Filter filter)
@@ -38,7 +43,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             filteredList.TotalCount = _context.Owners.Count();
             filteredList.FilterUsed = filter;
 
-            IEnumerable<Owner> filtering = _context.Owners;
+            IEnumerable<Owner> filtering = _context.Owners.AsNoTracking();
 
             if (!string.IsNullOrEmpty(filter.SearchText))
             {

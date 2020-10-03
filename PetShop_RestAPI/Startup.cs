@@ -68,7 +68,7 @@ namespace PetShop_RestAPI
                 },ServiceLifetime.Transient);
 
 
-            services.AddScoped<IPetColorRepository, PetColorRepository>();
+            services.AddScoped<IColourRepository, ColourRepository>();
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetService, PetService>();
             services.AddScoped<IOwnerRepository, OwnerRepository>();
@@ -159,7 +159,7 @@ namespace PetShop_RestAPI
                     context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
 
-                    var petcolor = context.PetColors.Add(new PetColor()
+                    var petcolor = context.PetColors.Add(new Colour()
                     {
                         Name = "blue"
 

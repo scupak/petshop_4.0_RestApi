@@ -51,7 +51,7 @@ namespace Petshop.infraStructure.Data
                 new Pet
                 {
 
-                    Id = _PetId++,
+                    PetId = _PetId++,
                     Name = "Jerry",
                     PetType = new PetType
                     {
@@ -74,7 +74,7 @@ namespace Petshop.infraStructure.Data
 
         public static Pet AddPet(Pet pet)
         {
-            pet.Id = _PetId++;
+            pet.PetId = _PetId++;
             _pets.Add(pet);
             return pet;
         }

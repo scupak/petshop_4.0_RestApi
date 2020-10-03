@@ -79,7 +79,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
 
         public Pet DeletePet(int id)
         {
-            Pet pet = _context.Pets.ToList().Find(x => x.Id == id);
+            Pet pet = _context.Pets.ToList().Find(x => x.PetId == id);
             if (pet != null)
             {
                 var returnPet = _context.Pets.Remove(pet).Entity;
@@ -130,7 +130,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
 
         public Pet GetPetById(int id)
         {
-            Pet pet = _context.Pets.ToList().Find(x => x.Id == id);
+            Pet pet = _context.Pets.ToList().Find(x => x.PetId == id);
 
             if (pet == null)
             {
@@ -145,7 +145,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
                 Name = pet.Name,
                 Birthdate = pet.Birthdate,
                 Color = pet.Color,
-                Id = pet.Id,
+                PetId = pet.PetId,
                 Price = pet.Price,
                 SoldDate = pet.SoldDate,
 
@@ -154,9 +154,9 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             };
 
             /*
-            temppet.Owner = _ownerRepository.GetOwners().Find(x => x.Id == pet.Owner.Id);
+            temppet.Owner = _ownerRepository.GetOwners().Find(x => x.ColourId == pet.Owner.ColourId);
 
-            temppet.PetType = _petTypeRepository.GetPetTypes().Find(x => x.Id == pet.PetType.Id);
+            temppet.PetType = _petTypeRepository.GetPetTypes().Find(x => x.ColourId == pet.PetType.ColourId);
             */
             return temppet;
 

@@ -22,7 +22,7 @@ namespace Petshop.core.ApplicationServices
         public Owner GetOwnerById(int id)
         {
             /*
-            Owner owner = _ownerRepository.GetOwners().Find(x => x.Id == id);
+            Owner owner = _ownerRepository.GetOwners().Find(x => x.ColourId == id);
 
             Owner tempOwner = new Owner
             {
@@ -31,13 +31,13 @@ namespace Petshop.core.ApplicationServices
                 LastName = owner.LastName,
                 Address = owner.Address,
                 PhoneNumber = owner.PhoneNumber, 
-                Id = owner.Id
+                ColourId = owner.ColourId
 
 
             };
 
 
-            tempOwner.Pets = _petRepository.GetPets().List.Where(pet => pet.Owner.Id == owner.Id).ToList();
+            tempOwner.Pets = _petRepository.GetPets().List.Where(pet => pet.Owner.ColourId == owner.ColourId).ToList();
 
             return tempOwner;
             */
@@ -66,7 +66,18 @@ namespace Petshop.core.ApplicationServices
 
         public Owner EditOwner(Owner owner)
         {
+            if (owner == null)
+            {
+                throw new ArgumentException("The sent data is null");
+            }
+
             int index = _ownerRepository.GetOwners(new Filter()).List.FindLastIndex(c => c.Id == owner.Id);
+
+            if (index == -1)
+            {
+                throw  new KeyNotFoundException("owner needs to exist in database");
+
+            }
 
             return _ownerRepository.EditOwner(owner, index);
         }

@@ -72,7 +72,7 @@ namespace Petshop.infraStructure.Data
             throw new NotImplementedException();
         }
 
-        public Pet DeleteOwner(int id)
+        public Owner DeleteOwner(int id)
         {
             throw new NotImplementedException();
         }

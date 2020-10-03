@@ -4,7 +4,7 @@ namespace Petshop.Core.Entity
 {
     public class Pet
     {
-        public int Id { get; set; }
+        public int PetId { get; set; }
         public string Name { get; set; }
         public DateTime Birthdate { get; set; }
         public DateTime SoldDate { get; set; }
@@ -41,7 +41,7 @@ namespace Petshop.Core.Entity
 
         public override string ToString()
         {
-            return $"{nameof(Id)}: {Id}, {nameof(Name)}: {Name}, {nameof(Birthdate)}: {Birthdate}, {nameof(SoldDate)}: {SoldDate}, {nameof(Color)}: {Color}, {nameof(Owner)}: {Owner}, {nameof(Price)}: {Price}, {nameof(PetType)}: {PetType}";
+            return $"{nameof(PetId)}: {PetId}, {nameof(Name)}: {Name}, {nameof(Birthdate)}: {Birthdate}, {nameof(SoldDate)}: {SoldDate}, {nameof(Color)}: {Color}, {nameof(Owner)}: {Owner}, {nameof(Price)}: {Price}, {nameof(PetType)}: {PetType}";
         }
     }
 }
