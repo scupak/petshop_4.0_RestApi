@@ -50,9 +50,31 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
 
         }
 
-        public Pet EditPet(Pet pet, int index)
+        public Pet EditPet(Pet editpet, int index)
         {
-            throw new NotImplementedException();
+            /**
+             * FakeDB._pets[index] = pet;
+               return FakeDB._pets[index];
+             */
+            if (editpet.PetType != null)
+            {
+                _context.Attach(editpet.PetType).State = EntityState.Unchanged;
+            }
+
+            if (editpet.Owner != null)
+            {
+
+                _context.Attach(editpet.Owner).State = EntityState.Unchanged;
+            }
+            else
+            {
+                _context.Entry(editpet).Reference(pet => pet.Owner).IsModified = true;
+            }
+
+            var returnPet = _context.Pets.Update(editpet).Entity;
+            _context.SaveChanges();
+            return returnPet;
+
         }
 
         public Pet DeletePet(int id)
@@ -65,10 +87,8 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
                 return returnPet;
 
             }
-            else
-            {
-                throw new KeyNotFoundException("Could not find a pet to delete ");
-            }
+
+            throw new KeyNotFoundException("Could not find a pet to delete ");
         }
 
         public FilteredList<Pet> GetPets(Filter filter)
@@ -80,7 +100,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             filteredList.TotalCount = _context.Pets.Count();
             filteredList.FilterUsed = filter;
 
-            IEnumerable<Pet> filtering = _context.Pets.Include(p => p.PetType).Include(p => p.Owner).ToList();
+            IEnumerable<Pet> filtering = _context.Pets.AsNoTracking().Include(p => p.PetType).Include(p => p.Owner).ToList();
 
             if (!string.IsNullOrEmpty(filter.SearchText))
             {
@@ -108,6 +128,38 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             return filteredList;
         }
 
-        
+        public Pet GetPetById(int id)
+        {
+            Pet pet = _context.Pets.ToList().Find(x => x.Id == id);
+
+            if (pet == null)
+            {
+                return null;
+
+            }
+
+            Pet temppet = new Pet
+            {
+                Owner = pet.Owner,
+                PetType = pet.PetType,
+                Name = pet.Name,
+                Birthdate = pet.Birthdate,
+                Color = pet.Color,
+                Id = pet.Id,
+                Price = pet.Price,
+                SoldDate = pet.SoldDate,
+
+
+
+            };
+
+            /*
+            temppet.Owner = _ownerRepository.GetOwners().Find(x => x.Id == pet.Owner.Id);
+
+            temppet.PetType = _petTypeRepository.GetPetTypes().Find(x => x.Id == pet.PetType.Id);
+            */
+            return temppet;
+
+        }
     }
 }

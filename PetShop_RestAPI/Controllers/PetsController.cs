@@ -92,6 +92,11 @@ namespace PetShop_RestAPI.Controllers
         [HttpPut("{id}")]
         public ActionResult<Pet> Put(int id, [FromBody] Pet value)
         {
+            try
+            {
+
+            
+
             value.Id = id;
             Pet pet = _petService.EditPet(value);
 
@@ -104,6 +109,13 @@ namespace PetShop_RestAPI.Controllers
            {
                return StatusCode(202, pet);
            }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e);
+            }
         }
 
         // DELETE api/<PetsController>/5

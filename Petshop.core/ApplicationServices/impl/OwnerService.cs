@@ -61,17 +61,7 @@ namespace Petshop.core.ApplicationServices
 
         public Owner DeleteOwner(int id)
         {
-            Owner owner = _ownerRepository.GetOwners(new Filter()).List.Find(x => x.Id == id);
-            if (owner != null)
-            {
-                _ownerRepository.GetOwners(new Filter()).List.Remove(owner);
-                return owner;
-
-            }
-            else
-            {
-                throw new KeyNotFoundException("Could not find an owner to delete ");
-            }
+            return _ownerRepository.DeleteOwner(id);
         }
 
         public Owner EditOwner(Owner owner)

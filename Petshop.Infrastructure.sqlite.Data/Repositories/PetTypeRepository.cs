@@ -60,5 +60,38 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             filteredList.List = filtering.ToList();
             return filteredList;
         }
+
+        
+        public PetType GetPetTypeById(int id)
+        {
+            PetType petType = _context.PetTypes.ToList().Find(x => x.Id == id);
+
+            PetType temPetType = new PetType
+            {
+                name = petType.name,
+                Id = petType.Id
+
+
+
+            };
+
+            temPetType.Pets = _context.Pets.ToList().Where(pet => pet.PetType.Id == petType.Id).ToList();
+
+            return temPetType;
+        }
+
+        public PetType DeletePetType(int id)
+        {
+            PetType petType = _context.PetTypes.ToList().Find(x => x.Id == id);
+            if (petType != null)
+            {
+                var returnPetType = _context.PetTypes.Remove(petType).Entity;
+                _context.SaveChanges();
+                return returnPetType;
+
+            }
+
+            throw new KeyNotFoundException("Could not find a PetType to delete ");
+        }
     }
 }

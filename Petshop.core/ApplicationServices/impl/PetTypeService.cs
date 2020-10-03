@@ -21,6 +21,7 @@ namespace Petshop.core.ApplicationServices
 
         public PetType GetPetTypeById(int id)
         {
+            /*
            PetType petType = _petTypeRepository.GetPetTypes(new Filter()).List.Find(x => x.Id == id);
 
            PetType temPetType = new PetType
@@ -35,6 +36,8 @@ namespace Petshop.core.ApplicationServices
            temPetType.Pets = _petRepository.GetPets(new Filter()).List.Where(pet => pet.PetType.Id == petType.Id).ToList();
 
            return temPetType;
+            */
+            return _petTypeRepository.GetPetTypeById(id);
         }
 
 
@@ -55,6 +58,7 @@ namespace Petshop.core.ApplicationServices
 
         public PetType DeletePetType(int id)
         {
+            /*
             PetType petType = _petTypeRepository.GetPetTypes(new Filter()).List.Find(x => x.Id == id);
             if (petType != null)
             {
@@ -74,6 +78,9 @@ namespace Petshop.core.ApplicationServices
             {
                 throw new KeyNotFoundException("Could not find an owner to delete ");
             }
+            */
+
+            return _petTypeRepository.DeletePetType(id);
         }
 
         public PetType EditPetType(PetType petType)

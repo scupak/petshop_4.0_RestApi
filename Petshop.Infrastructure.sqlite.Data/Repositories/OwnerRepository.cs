@@ -38,7 +38,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             filteredList.TotalCount = _context.Owners.Count();
             filteredList.FilterUsed = filter;
 
-            IEnumerable<Owner> filtering = _context.Owners.Include(owner => owner.Pets);
+            IEnumerable<Owner> filtering = _context.Owners;
 
             if (!string.IsNullOrEmpty(filter.SearchText))
             {
@@ -73,6 +73,20 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             return _context.Owners
                 .Include(owner => owner.Pets)
                 .FirstOrDefault(owner => owner.Id == id);
+        }
+
+        public Owner DeleteOwner(int id)
+        {
+            Owner owner = _context.Owners.ToList().Find(x => x.Id == id);
+            if (owner != null)
+            {
+                var returnOwner = _context.Owners.Remove(owner).Entity;
+                _context.SaveChanges();
+                return returnOwner;
+
+            }
+
+            throw new KeyNotFoundException("Could not find a Owner to delete ");
         }
     }
     }

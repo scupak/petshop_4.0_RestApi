@@ -59,5 +59,15 @@ namespace Petshop.infraStructure.Data
             filteredList.List = filtering.ToList();
             return filteredList;
         }
+
+        public PetType GetPetTypeById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PetType DeletePetType(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

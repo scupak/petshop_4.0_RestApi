@@ -23,36 +23,7 @@ namespace Petshop.core.ApplicationServices
 
         public Pet GetPetById(int id)
         {
-            Pet pet = _petRepository.GetPets(new Filter()).List.Find(x => x.Id == id);
-
-            if (pet == null)
-            {
-                return null;
-
-            }
-
-            Pet temppet = new Pet
-            {
-                Owner = pet.Owner,
-                PetType = pet.PetType,
-                Name = pet.Name, 
-                Birthdate = pet.Birthdate,
-                Color = pet.Color,
-                Id = pet.Id,
-                Price = pet.Price,
-                SoldDate = pet.SoldDate,
-
-
-
-            };
-
-            /*
-            temppet.Owner = _ownerRepository.GetOwners().Find(x => x.Id == pet.Owner.Id);
-
-            temppet.PetType = _petTypeRepository.GetPetTypes().Find(x => x.Id == pet.PetType.Id);
-            */
-            return temppet;
-
+           return _petRepository.GetPetById(id);
         }
 
         public FilteredList<Pet> GetPets(Filter filter)
@@ -108,14 +79,40 @@ namespace Petshop.core.ApplicationServices
 
         public Pet EditPet(Pet pet)
         {
-            int index = _petRepository.GetPets(new Filter()).List.FindLastIndex(c => c.Id == pet.Id);
 
-            if (index == -1)
+            if (pet.PetType != null)
             {
-                return null;
+                int index = _petRepository.GetPets(new Filter()).List.FindLastIndex(c => c.Id == pet.Id);
+
+                if (index == -1)
+                {
+                    return null;
+                }
+
+
+                var petType = _petTypeRepository.GetPetTypes(new Filter()).List.FirstOrDefault(p => p.Id == pet.PetType.Id);
+                if (petType == null)
+                {
+                    throw new InvalidDataException("PetType must exist in the database");
+                }
+
+
+                if (pet.Owner != null)
+                {
+                    var owner = _ownerRepository.GetOwners(new Filter()).List.FirstOrDefault(o => o.Id == pet.Owner.Id);
+
+                    if (owner == null)
+                    {
+                        throw new InvalidDataException("Owner must exist in the database");
+                    }
+                }
+
+                return _petRepository.EditPet(pet, index);
+
             }
 
-            return _petRepository.EditPet(pet, index);
+            throw new InvalidDataException("PetType must exist in the database");
+
 
         }
     }

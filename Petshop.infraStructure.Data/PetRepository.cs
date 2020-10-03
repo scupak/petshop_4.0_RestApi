@@ -86,6 +86,11 @@ namespace Petshop.infraStructure.Data
             return filteredList;
         }
 
+        public Pet GetPetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public FilteredList<Pet> GetPets()
         {
             var filteredList = new FilteredList<Pet>();
