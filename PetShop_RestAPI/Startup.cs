@@ -11,6 +11,7 @@ using Petshop.Core.Entity;
 using System.Reflection;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Petshop.Infrastructure.Db.Data;
 using Petshop.Infrastructure.Db.Data.Repositories;
@@ -195,7 +196,14 @@ namespace PetShop_RestAPI
                         SoldDate = DateTime.Now.AddYears(-2),
                     });
 
-                    context.SaveChanges();
+                    context.Users.Add(new User()
+                    {
+                        IsAdmin = true,
+                        Password = "1234",
+                        Username = "tony"
+                    });
+
+                        context.SaveChanges();
 
                 }
            

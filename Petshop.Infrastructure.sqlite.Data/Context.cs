@@ -14,6 +14,7 @@ namespace Petshop.Infrastructure.Db.Data
         public DbSet<Owner> Owners { get; set; }
         public DbSet<PetType> PetTypes { get; set; }
         public DbSet<Colour> PetColors { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public Context(DbContextOptions options) : base(options)
         {
