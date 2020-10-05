@@ -1,25 +1,31 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Petshop.core.DomainServices;
 using Petshop.Core.Entity;
-using Petshop.Infrastructure.Db.Data;
+using Petshop.Core.Filter;
 
-
-namespace TodoApi.Data
+namespace Petshop.Infrastructure.Db.Data.Repositories
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IUserRepository
     {
         private readonly Context db;
+
+
 
         public UserRepository(Context context)
         {
             db = context;
         }
 
-        public IEnumerable<User> GetAll()
+        public FilteredList<User> GetAll()
         {
-            return db.Users.ToList();
+            var filteredList = new FilteredList<User>();
+
+            filteredList.TotalCount = db.Users.ToList().Count;
+
+            filteredList.List = db.Users.ToList();
+
+            return filteredList;
         }
 
         public User Get(long id)

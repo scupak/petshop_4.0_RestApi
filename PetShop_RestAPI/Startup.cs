@@ -10,9 +10,11 @@ using Petshop.core.DomainServices;
 using Petshop.Core.Entity;
 using System.Reflection;
 using System.IO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Petshop.core.ApplicationServices.impl;
 using Petshop.Infrastructure.Db.Data;
 using Petshop.Infrastructure.Db.Data.Repositories;
 
@@ -30,6 +32,27 @@ namespace PetShop_RestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Create a byte array with random values. This byte array is used
+            // to generate a key for signing JWT tokens.
+            Byte[] secretBytes = new byte[40];
+            Random rand = new Random();
+            rand.NextBytes(secretBytes);
+
+            // Add JWT based authentication
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    //ValidAudience = "TodoApiClient",
+                    ValidateIssuer = false,
+                    //ValidIssuer = "TodoApi",
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(secretBytes),
+                    ValidateLifetime = true, //validate the expiration and not before values in the token
+                    ClockSkew = TimeSpan.FromMinutes(5) //5 minute tolerance for the expiration date
+                };
+            });
 
             //CORS configuration 
             services.AddCors(options => options.AddPolicy("AllowEverything", builder =>
@@ -68,6 +91,15 @@ namespace PetShop_RestAPI
                     opt.UseSqlite("Data Source=PetShop.db").EnableSensitiveDataLogging();
                 },ServiceLifetime.Transient);
 
+            // Register the AuthenticationHelper in the helpers folder for dependency
+            // injection. It must be registered as a singleton service. The AuthenticationHelper
+            // is instantiated with a parameter. The parameter is the previously created
+            // "secretBytes" array, which is used to generate a key for signing JWT tokens,
+            services.AddSingleton<IAuthenticationHelper>(new
+                AuthenticationHelper(secretBytes));
+
+
+            
 
             services.AddScoped<IColourRepository, ColourRepository>();
             services.AddScoped<IPetRepository, PetRepository>();
@@ -77,13 +109,18 @@ namespace PetShop_RestAPI
             services.AddScoped<IPetTypeRepository, PetTypeRepository>();
             services.AddScoped<IPetTypeService, PetTypeService>();
 
+            services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
             services.AddControllers().AddNewtonsoftJson(o =>
             {
                 o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.MaxDepth = 5;
 
             } );
-            
+
+            services.AddControllers();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -203,7 +240,15 @@ namespace PetShop_RestAPI
                         Username = "tony"
                     });
 
-                        context.SaveChanges();
+
+                    context.Users.Add(new User()
+                    {
+                        IsAdmin = false,
+                        Password = "1234",
+                        Username = "max"
+                    });
+
+                    context.SaveChanges();
 
                 }
            
@@ -231,6 +276,9 @@ namespace PetShop_RestAPI
 
             //Enable CORS policy 
             app.UseCors("AllowEverything");
+
+            // Use authentication
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

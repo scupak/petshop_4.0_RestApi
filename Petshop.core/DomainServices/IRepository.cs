@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Petshop.Core.Filter;
 
-namespace TodoApi.Data
+namespace Petshop.core.DomainServices
 {
     public interface IRepository<T>
     {
-        IEnumerable<T> GetAll();
+        FilteredList<T> GetAll();
         T Get(long id);
         void Add(T entity);
         void Edit(T entity);

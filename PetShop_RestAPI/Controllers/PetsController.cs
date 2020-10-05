@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Petshop.core.ApplicationServices;
 using Petshop.Core.Entity;
@@ -24,12 +25,16 @@ namespace PetShop_RestAPI.Controllers
 
         // GET: api/<PetsController>
         /// <summary>
-        /// kurwa kurwa
+        /// Gets all the pets. 
         /// </summary>
         /// <param name="filter"></param>
         /// <returns> A FilteredList of pets </returns>
-        /// <response code="201">Returns the newly created item</response>
-        /// <response code="400">If the item is null</response>  
+        /// <response code="201">Returns the newly created items</response>
+        /// <response code="400">If the item is null</response>
+        ///
+
+        //TODO enable authorization later
+        // [Authorize(Roles = "Administrator")]
         [HttpGet]
         public ActionResult<FilteredList<Pet>> Get([FromQuery] Filter filter)
         {

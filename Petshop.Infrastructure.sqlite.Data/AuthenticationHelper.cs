@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Security.Claims;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 using Petshop.core.DomainServices;
 using Petshop.Core.Entity;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 
-namespace TodoApi.Helpers
+namespace Petshop.Infrastructure.Db.Data
 {
     public class AuthenticationHelper : IAuthenticationHelper
     {
         private byte[] secretBytes;
 
-        public AuthenticationHelper(Byte[] secret)
+        public AuthenticationHelper(byte[] secret)
         {
             secretBytes = secret;
         }
