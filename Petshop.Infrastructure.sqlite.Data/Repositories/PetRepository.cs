@@ -32,6 +32,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
              *  return FakeDB.AddPet(pet);
              */
 
+
             if (pet.PetType != null)
             {
                 _context.Attach(pet.PetType).State = EntityState.Unchanged;
@@ -99,8 +100,27 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
 
             filteredList.TotalCount = _context.Pets.Count();
             filteredList.FilterUsed = filter;
+            filteredList.TotalCount = _context.Pets.Count();
 
-            IEnumerable<Pet> filtering = _context.Pets.AsNoTracking().Include(p => p.PetType).Include(p => p.Owner).ToList();
+            if (filter.CurrentPage == 0)
+            {
+                filter.CurrentPage = 1;
+            }
+
+            if (filter.ItemsPrPage == 0)
+            {
+                filter.ItemsPrPage = 10;
+            }
+
+
+            IEnumerable<Pet> filtering = _context
+                .Pets.AsNoTracking()
+                .Include(p => p.PetType)
+                .Include(p => p.Owner)
+                .Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
+                .Take(filter.ItemsPrPage)
+                .ToList();
+
 
             if (!string.IsNullOrEmpty(filter.SearchText))
             {
@@ -162,5 +182,8 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             return temppet;
 
         }
+
+
+        
     }
 }

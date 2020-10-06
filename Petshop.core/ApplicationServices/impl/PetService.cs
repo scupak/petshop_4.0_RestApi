@@ -28,10 +28,32 @@ namespace Petshop.core.ApplicationServices
 
         public FilteredList<Pet> GetPets(Filter filter)
         {
+            FilteredList<Pet> filteredPets;
+
             if (!string.IsNullOrEmpty(filter.SearchText) && string.IsNullOrEmpty(filter.SearchField))
             {
                 filter.SearchField = "name";
             }
+
+            if (filter.CurrentPage < 0 || filter.ItemsPrPage < 0)
+            {
+                throw new InvalidDataException("CurrentPage and ItemsPrPage must be zero or more");
+            }
+
+            if ((filter.CurrentPage - 1 * filter.ItemsPrPage) >= _petRepository.GetPets(filter).List.Count)
+            {
+                throw new InvalidDataException("Index out of bounds, CurrentPage is to high");
+            }
+
+            filteredPets = _petRepository.GetPets(filter);
+
+            if (filteredPets.List.Count < 1)
+            {
+                throw new KeyNotFoundException("Could not find pets that satisfy the filter");
+            }
+
+
+
 
             return _petRepository.GetPets(filter);
         }
