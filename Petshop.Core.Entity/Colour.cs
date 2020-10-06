@@ -10,5 +10,7 @@ namespace Petshop.Core.Entity
 
         public string Name { get; set; }
 
+        public List<ColourPet> ColourPets;
+
     }
 }

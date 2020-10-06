@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Petshop.Core.Entity
 {
@@ -12,6 +13,8 @@ namespace Petshop.Core.Entity
         public Owner Owner { get; set; }
         public double Price { get; set; }
         public PetType PetType { get; set; }
+
+        public List<ColourPet> ColourPets;
 
         public Pet(string name, DateTime birthdate, string color, Owner owner, double price, PetType petType, DateTime soldDate)
         {

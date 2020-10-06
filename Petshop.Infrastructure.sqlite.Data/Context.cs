@@ -13,7 +13,7 @@ namespace Petshop.Infrastructure.Db.Data
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<PetType> PetTypes { get; set; }
-        public DbSet<Colour> PetColors { get; set; }
+        public DbSet<Colour> Colours { get; set; }
         public DbSet<User> Users { get; set; }
 
         public Context(DbContextOptions options) : base(options)
@@ -36,6 +36,16 @@ namespace Petshop.Infrastructure.Db.Data
 
             modelBuilder.Entity<ColourPet>()
                 .HasKey(x => new {x.PetId, x.ColourId});
+
+            modelBuilder.Entity<ColourPet>()
+                .HasOne(cp => cp.Colour)
+                .WithMany(c => c.ColourPets)
+                .HasForeignKey(cp => cp.ColourId);
+
+            modelBuilder.Entity<ColourPet>()
+                .HasOne(cp => cp.Pet)
+                .WithMany(p => p.ColourPets)
+                .HasForeignKey(cp => cp.PetId);
 
         }
     }

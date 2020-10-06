@@ -130,7 +130,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
 
         public Pet GetPetById(int id)
         {
-            Pet pet = _context.Pets.ToList().Find(x => x.PetId == id);
+            Pet pet = _context.Pets.Include(p => p.ColourPets).ThenInclude(colorPet => colorPet.Colour).ToList().Find(x => x.PetId == id);
 
             if (pet == null)
             {
@@ -148,6 +148,7 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
                 PetId = pet.PetId,
                 Price = pet.Price,
                 SoldDate = pet.SoldDate,
+                ColourPets = pet.ColourPets
 
 
 

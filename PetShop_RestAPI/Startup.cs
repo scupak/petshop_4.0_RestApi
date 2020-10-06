@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -197,11 +198,10 @@ namespace PetShop_RestAPI
                     context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
 
-                    var petcolor = context.PetColors.Add(new Colour()
-                    {
+                    var colour = new Colour{
                         Name = "blue"
 
-                    }).Entity;
+                    };
 
                     var petType1 = context.PetTypes.Add(new PetType()
                     {
@@ -210,8 +210,7 @@ namespace PetShop_RestAPI
 
                     }).Entity;
 
-                    var pet1 = context.Pets.Add(new Pet()
-                    {
+                    var pet1 =new Pet{
 
 
                         Name = "merry",
@@ -221,7 +220,18 @@ namespace PetShop_RestAPI
                         Price = 50,
                         SoldDate = DateTime.Now.AddYears(-2),
 
-                    }).Entity;
+                    };
+
+                    pet1.ColourPets = new List<ColourPet>
+                    {
+                        new ColourPet
+                        {
+                            Pet = pet1,
+                            Colour = colour
+                        }
+                    };
+
+                    context.Pets.Add(pet1);
 
                     context.Pets.Add(new Pet()
                     {
