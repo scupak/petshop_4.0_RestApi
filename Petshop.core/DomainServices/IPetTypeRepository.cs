@@ -17,5 +17,6 @@ namespace Petshop.core.DomainServices
         public PetType DeletePetType(int id);
 
         public PetType GetPetTypeById(int id);
+        public FilteredList<PetType> GetPetTypes();
     }
 }

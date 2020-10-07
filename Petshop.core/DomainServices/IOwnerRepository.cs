@@ -18,6 +18,6 @@ namespace Petshop.core.DomainServices
 
         public Owner DeleteOwner(int id);
 
-
+        public FilteredList<Owner> GetOwners();
     }
 }

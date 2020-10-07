@@ -1,4 +1,5 @@
 ﻿using Petshop.core.ApplicationServices;
+using Petshop.core.ApplicationServices.impl;
 using Petshop.core.DomainServices;
 using Petshop.infraStructure.Data;
 
@@ -10,11 +11,13 @@ namespace Petshop.UI
         {
             IPetRepository petRepository = new PetRepository();
             
-            IPetService petService = new PetService(petRepository);
+            IPetTypeRepository petTypeRepository = new PetTypeRepository();
 
             IOwnerRepository ownerRepository = new OwnerRepository();
+
+            IPetService petService = new PetService(petRepository,ownerRepository,petTypeRepository);
             
-            IOwnerService ownerService = new OwnerService(ownerRepository);
+            IOwnerService ownerService = new OwnerService(ownerRepository,petRepository);
 
             FakeDB.InitData();
 

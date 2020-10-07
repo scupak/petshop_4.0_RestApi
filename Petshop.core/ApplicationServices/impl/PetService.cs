@@ -1,12 +1,11 @@
-﻿using Petshop.core.DomainServices;
-using Petshop.Core.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
+using Petshop.core.DomainServices;
+using Petshop.Core.Entity;
 using Petshop.Core.Filter;
 
-namespace Petshop.core.ApplicationServices
+namespace Petshop.core.ApplicationServices.impl
 {
     public class PetService : IPetService
     {
@@ -58,12 +57,17 @@ namespace Petshop.core.ApplicationServices
             return _petRepository.GetPets(filter);
         }
 
+        public FilteredList<Pet> GetPets()
+        {
+            return _petRepository.GetPets();
+        }
+
 
         public Pet CreatePet(Pet pet)
         {
             if (pet.PetType != null)
             {
-                var petType = _petTypeRepository.GetPetTypes(new Filter()).List.FirstOrDefault(p => p.Id == pet.PetType.Id);
+                var petType = _petTypeRepository.GetPetTypes().List.FirstOrDefault(p => p.Id == pet.PetType.Id);
                 if (petType == null)
                 {
                     throw new InvalidDataException("PetType must exist in the database");
@@ -72,7 +76,7 @@ namespace Petshop.core.ApplicationServices
 
                 if (pet.Owner != null)
                 {
-                    var owner = _ownerRepository.GetOwners(new Filter()).List.FirstOrDefault(o => o.Id == pet.Owner.Id);
+                    var owner = _ownerRepository.GetOwners().List.FirstOrDefault(o => o.Id == pet.Owner.Id);
 
                     if (owner == null)
                     {
@@ -104,7 +108,7 @@ namespace Petshop.core.ApplicationServices
 
             if (pet.PetType != null)
             {
-                int index = _petRepository.GetPets(new Filter()).List.FindLastIndex(c => c.PetId == pet.PetId);
+                int index = _petRepository.GetPets().List.FindLastIndex(c => c.PetId == pet.PetId);
 
                 if (index == -1)
                 {
@@ -112,7 +116,7 @@ namespace Petshop.core.ApplicationServices
                 }
 
 
-                var petType = _petTypeRepository.GetPetTypes(new Filter()).List.FirstOrDefault(p => p.Id == pet.PetType.Id);
+                var petType = _petTypeRepository.GetPetTypes().List.FirstOrDefault(p => p.Id == pet.PetType.Id);
                 if (petType == null)
                 {
                     throw new InvalidDataException("PetType must exist in the database");
@@ -121,7 +125,7 @@ namespace Petshop.core.ApplicationServices
 
                 if (pet.Owner != null)
                 {
-                    var owner = _ownerRepository.GetOwners(new Filter()).List.FirstOrDefault(o => o.Id == pet.Owner.Id);
+                    var owner = _ownerRepository.GetOwners().List.FirstOrDefault(o => o.Id == pet.Owner.Id);
 
                     if (owner == null)
                     {

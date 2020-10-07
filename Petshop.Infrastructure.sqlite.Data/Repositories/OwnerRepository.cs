@@ -93,6 +93,15 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
 
             throw new KeyNotFoundException("Could not find a Owner to delete ");
         }
+
+        public FilteredList<Owner> GetOwners()
+        {
+            FilteredList<Owner> filteredList = new FilteredList<Owner>();
+
+            filteredList.List = _context.Owners.ToList();
+
+            return filteredList;
+        }
     }
     }
 

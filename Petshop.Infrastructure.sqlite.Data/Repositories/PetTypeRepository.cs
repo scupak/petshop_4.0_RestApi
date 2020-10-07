@@ -87,6 +87,15 @@ namespace Petshop.Infrastructure.Db.Data.Repositories
             return temPetType;
         }
 
+        public FilteredList<PetType> GetPetTypes()
+        {
+            FilteredList<PetType> filteredList = new FilteredList<PetType>();
+
+            filteredList.List = _context.PetTypes.ToList();
+
+            return filteredList;
+        }
+
         public PetType DeletePetType(int id)
         {
             PetType petType = _context.PetTypes.ToList().Find(x => x.Id == id);

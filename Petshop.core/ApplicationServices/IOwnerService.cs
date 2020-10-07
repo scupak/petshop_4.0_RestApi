@@ -12,6 +12,8 @@ namespace Petshop.core.ApplicationServices
 
         public FilteredList<Owner> GetOwners(Filter filter);
 
+        public FilteredList<Owner> GetOwners();
+
         public Owner CreateOwner(Owner owner);
 
         public Owner DeleteOwner(int id);

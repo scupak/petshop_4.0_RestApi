@@ -51,6 +51,11 @@ namespace Petshop.core.ApplicationServices
             return _petTypeRepository.GetPetTypes(filter);
         }
 
+        public FilteredList<PetType> GetPetTypes()
+        {
+            return _petTypeRepository.GetPetTypes();
+        }
+
         public PetType CreatePetType(PetType petType)
         {
             return _petTypeRepository.AddPetType(petType);

@@ -54,6 +54,11 @@ namespace Petshop.core.ApplicationServices
             return _ownerRepository.GetOwners(filter);
         }
 
+        public FilteredList<Owner> GetOwners()
+        {
+           return _ownerRepository.GetOwners();
+        }
+
         public Owner CreateOwner(Owner owner)
         {
             return _ownerRepository.AddOwner(owner);
@@ -71,7 +76,7 @@ namespace Petshop.core.ApplicationServices
                 throw new ArgumentException("The sent data is null");
             }
 
-            int index = _ownerRepository.GetOwners(new Filter()).List.FindLastIndex(c => c.Id == owner.Id);
+            int index = _ownerRepository.GetOwners().List.FindLastIndex(c => c.Id == owner.Id);
 
             if (index == -1)
             {

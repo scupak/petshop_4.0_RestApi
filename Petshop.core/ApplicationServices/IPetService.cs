@@ -11,6 +11,8 @@ namespace Petshop.core.ApplicationServices
 
         public FilteredList<Pet> GetPets(Filter filter);
 
+        public FilteredList<Pet> GetPets();
+
         public Pet CreatePet(Pet pet);
 
         public Pet DeletePet(int id);

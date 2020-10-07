@@ -15,12 +15,6 @@ namespace Petshop.core.DomainServices
         public FilteredList<Pet> GetPets(Filter filter);
 
         public Pet GetPetById(int id);
-
-
-
-
-
-
-
+        public FilteredList<Pet> GetPets();
     }
 }
