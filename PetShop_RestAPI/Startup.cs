@@ -112,6 +112,8 @@ namespace PetShop_RestAPI
 
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            
+
 
             services.AddControllers().AddNewtonsoftJson(o =>
             {
@@ -194,7 +196,10 @@ namespace PetShop_RestAPI
                     var petRepo = scope.ServiceProvider.GetService<IPetRepository>();
                     var ownerRepo = scope.ServiceProvider.GetService<IOwnerRepository>();
                     var petTypeRepo = scope.ServiceProvider.GetService<IPetTypeRepository>();
+                    var authenticationHelper = scope.ServiceProvider.GetService<IAuthenticationHelper>();
+
                     var context = scope.ServiceProvider.GetService<Context>();
+                    
 
                     context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
@@ -244,19 +249,32 @@ namespace PetShop_RestAPI
                         SoldDate = DateTime.Now.AddYears(-2),
                     });
 
+
+                    string password = "1234";
+                    byte[] passwordHashJoe, passwordSaltJoe, passwordHashAnn, passwordSaltAnn;
+
+                   
+                    authenticationHelper.CreatePasswordHash(password, out passwordHashJoe, out passwordSaltJoe);
+                    authenticationHelper.CreatePasswordHash(password, out passwordHashAnn, out passwordSaltAnn);
+
                     context.Users.Add(new User()
                     {
-                        IsAdmin = true,
-                        Password = "1234",
-                        Username = "tony"
+                        Username = "UserJoe",
+                            PasswordHash = passwordHashJoe,
+                            PasswordSalt = passwordSaltJoe,
+                            IsAdmin = false
+                      
                     });
 
 
                     context.Users.Add(new User()
                     {
-                        IsAdmin = false,
-                        Password = "1234",
-                        Username = "max"
+                        
+                            Username = "AdminAnn",
+                            PasswordHash = passwordHashAnn,
+                            PasswordSalt = passwordSaltAnn,
+                            IsAdmin = true
+                       
                     });
 
                     context.SaveChanges();
