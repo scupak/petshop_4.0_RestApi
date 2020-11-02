@@ -34,7 +34,7 @@ namespace PetShop_RestAPI.Controllers
         ///
 
         //TODO enable authorization later
-        // [Authorize(Roles = "Administrator")]
+        [Authorize]
         [HttpGet]
         public ActionResult<FilteredList<Pet>> Get([FromQuery] Filter filter)
         {
@@ -53,6 +53,7 @@ namespace PetShop_RestAPI.Controllers
         }
 
         // GET api/<PetsController>/5
+        [Authorize(Roles = "Administrator")]
         [HttpGet("{id}")]
         public ActionResult<Pet> Get(int id)
         {
